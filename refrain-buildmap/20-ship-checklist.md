@@ -1,6 +1,6 @@
 # Chapter 20 — Ship Checklist
 
-> **Day 21 · Goal: the extension is submitted, the privacy policy is verifiable, and you know
+> **Day 20 · Goal: the extension is submitted, the privacy policy is verifiable, and you know
 > exactly what you did not build.**
 >
 > The final gate. Everything before this chapter made the product work. This one makes it

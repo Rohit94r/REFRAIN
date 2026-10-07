@@ -1,6 +1,6 @@
 # Chapter 10 — The Mascot
 
-> **Day 11 · Goal: one geometry, four states, every size, zero external assets.**
+> **Day 10 · Goal: one geometry, four states, every size, zero external assets.**
 >
 > The mascot is not decoration. Per §9 it is a **state indicator with four states**, and
 > mascot-driven UI is your distribution strategy — the screenshot a student sends to their

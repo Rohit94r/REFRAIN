@@ -1,6 +1,6 @@
 # Chapter 12 — The Vault
 
-> **Day 13 · Goal: encrypted, searchable, provenance-carrying profile. Lock and unlock work.**
+> **Day 12 · Goal: encrypted, searchable, provenance-carrying profile. Lock and unlock work.**
 >
 > This is the foundation everything else stands on. If provenance here is sloppy, the review
 > screen lies, and the whole product is worthless.

@@ -1,6 +1,6 @@
 # Chapter 15 — Fermata
 
-> **Day 16 · Goal: one Google Form filled end-to-end. This is the MVP.**
+> **Day 15 · Goal: one Google Form filled end-to-end. This is the MVP.**
 >
 > A fermata is a held note — the performer waits for the conductor. This screen is your §11
 > human gate made visible. **It is the product.** Spend your best hours here.

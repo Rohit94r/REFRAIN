@@ -1,6 +1,6 @@
 # Chapter 16 — The Setlist & Verses
 
-> **Day 17 · Goal: the tracker persists, Encore re-fills a stale form, and Verses adapt to length.**
+> **Day 16 · Goal: the tracker persists, Encore re-fills a stale form, and Verses adapt to length.**
 >
 > Two features that look like CRUD and are not. The Setlist is why you get a second session;
 > Verses are the one thing no competitor in §12's table has at all.

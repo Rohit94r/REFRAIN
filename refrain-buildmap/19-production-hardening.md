@@ -1,6 +1,6 @@
 # Chapter 19 — Production Hardening
 
-> **Day 20 · Goal: know your numbers, pass an accessibility audit, and understand what breaks
+> **Day 19 · Goal: know your numbers, pass an accessibility audit, and understand what breaks
 > at 10,000 users.**
 >
 > The chapter between "it works" and "it works for someone else on a bad phone."

@@ -1,6 +1,6 @@
 # Chapter 9 — The Design System
 
-> **Day 10 · Goal: mascot renders all four states, provenance chips designed.**
+> **Day 9 · Goal: mascot renders all four states, provenance chips designed.**
 >
 > The mascot is not decoration. Per §9, it is a **state indicator with four states**, and
 > mascot-driven UI is your distribution strategy — the screenshot students share is your

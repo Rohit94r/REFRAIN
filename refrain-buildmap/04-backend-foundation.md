@@ -1,6 +1,6 @@
 # Chapter 4 — Backend Foundation
 
-> **Day 16 · Phase 2 begins · Goal: an API running locally against MongoDB, with §11 rewritten
+> **Day 4 · Goal: an API running locally against MongoDB, with §11 rewritten
 > to tell the truth.**
 >
 > You asked for MongoDB for the long run. It is the right call for the data shape. It also

@@ -1,6 +1,6 @@
 # Chapter 17 — Document Extraction
 
-> **Day 18 · Goal: a text PDF and a photographed marksheet both produce reviewable facts with
+> **Day 17 · Goal: a text PDF and a photographed marksheet both produce reviewable facts with
 > verifiable provenance.**
 >
 > The least glamorous chapter and the one that decides whether Refrain saves the user ten

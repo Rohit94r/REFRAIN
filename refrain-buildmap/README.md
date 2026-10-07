@@ -134,11 +134,11 @@ comes from having shown something to a human who is not you.
 | **Day 14** | The panel saying "I found 14 fields" on a real portal | The core is real |
 | **Day 16** | One form filled end-to-end. You pressed submit | It actually works |
 
-Day 14's checkpoint is the honest one, and it is the one people skip. "I found
+Day 13's checkpoint is the honest one, and it is the one people skip. "I found
 14 fields" is achievable with the content script and the mapping engine alone.
 **If you cannot clear it, nothing later matters.** A product that scans
 perfectly and cannot fill is a product that demonstrates failure — and you want
-that failure on Day 14, while you can still fix it.
+that failure on Day 13, while you can still fix it.
 
 ---
 
@@ -227,11 +227,11 @@ schema changes are **additive-only** for one minor version.
 - **Not a product spec.** `refrain.md` is that.
 - **Not a copy-paste tutorial.** Every block is there to be understood and then
   typed or deleted. Nothing works if you skip the reasoning.
-- **Not 21 days of typing.** It is ~19,000 lines of curriculum describing 21
-  days of work. The day numbers are a **budget, not a quota** — Chapter 15 is
-  three days, and Chapters 13 and 17 are the two that reliably run over.
+- **Not 20 days of typing.** It is ~16,000 lines of curriculum describing 20
+  days of work. The day numbers are a **budget, not a quota** — Chapter 15 is the
+  one that reliably runs over, and Chapters 13 and 17 usually run over too.
 
 ---
 
-*Twenty-one days. Twenty chapters. Read the chapter, then build it.*
+*Twenty days. Twenty chapters. Chapter N is Day N. Read the chapter, then build it.*
 *Start with [Chapter 1 — Foundations](./01-foundations.md).*

@@ -1,6 +1,6 @@
 # Chapter 11 — The Web App Shell
 
-> **Day 12 · Goal: every screen exists, navigates, and is empty. No product logic yet.**
+> **Day 11 · Goal: every screen exists, navigates, and is empty. No product logic yet.**
 >
 > Front end first. You build the whole skeleton — routing, layout, every page — so that from
 > Chapter 12 onward you are *filling in* a working app rather than *constructing* one. A shell

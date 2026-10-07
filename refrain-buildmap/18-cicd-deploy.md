@@ -1,6 +1,6 @@
 # Chapter 18 — CI/CD & Deployment
 
-> **Day 19 · Goal: one command ships all three surfaces, and you know how to undo it.**
+> **Day 18 · Goal: one command ships all three surfaces, and you know how to undo it.**
 >
 > Three targets, three update cadences, and one shared dependency graph. Getting this wrong is
 > how a user ends up on a two-week-old extension talking to a web app you deployed an hour ago.

@@ -116,6 +116,27 @@ npm init -y
 node --version   # v26
 ```
 
+> **This server is deliberately NOT inside the monorepo.**
+>
+> `~/refrain-server/` is a scratch project you throw away at the end of this
+> chapter. It is outside `refrain/` on purpose, because the monorepo already
+> has `apps/web` and `apps/extension` and this server is neither — it is a
+> throwaway for understanding.
+>
+> **Chapter 4 builds the real one** at `apps/api` inside the monorepo, with
+> Hono, MongoDB, and config validation. So at the end of today:
+>
+> ```bash
+> rm -rf ~/refrain-server
+> ```
+>
+> Do not skip that. Keeping a stray server around is how you end up with two
+> `server.js` files and no idea which one you are running.
+>
+> **Why build it outside the monorepo at all?** Because inside it you would be
+> fighting Hono, Mongoose, and Zod while trying to learn what `createServer`
+> does. One idea per chapter. Tomorrow you get the real one.
+
 ### `server.js` — a server you fully understand
 
 ```js
@@ -196,7 +217,7 @@ HTTP/1.1 404 Not Found
 Print it once and look:
 
 ```js
-server = createServer((req, res) => {
+const server = createServer((req, res) => {
   console.log({
     method: req.method,        // "GET" | "POST" | "PUT" | "DELETE"
     url: req.url,              // "/api/health?debug=1"  ← query string included!
@@ -224,7 +245,7 @@ A `POST` body arrives in chunks. You cannot read it synchronously — **you do
 not know its size yet.**
 
 ```js
-server = createServer((req, res) => {
+const server = createServer((req, res) => {
   if (req.method !== "POST") {
     res.writeHead(405, { Allow: "POST" })   // 405, not 404 — the route exists
     res.end()
@@ -308,13 +329,33 @@ function logger(req, res, next) {
   next()
 }
 
-server = createServer((req, res) => {
+const server = createServer((req, res) => {
   logger(req, res, () => jsonBody(req, res, () => {
     // the real handler
     res.writeHead(200, { "Content-Type": "application/json" })
     res.end(JSON.stringify({ received: req.body }))
   }))
 })
+
+// WITHOUT THIS LINE THE SERVER NEVER STARTS.
+// createServer builds the server; listen binds the port. Miss
+// listen and you get no error, no output, and curl hangs forever —
+// which looks exactly like a firewall problem.
+server.listen(3000, () => console.log("up on http://localhost:3000"))
+```
+
+Now it works end to end. Test it:
+
+```bash
+curl -i -X POST http://localhost:3000/api/docs \
+  -H "Content-Type: application/json" \
+  -d '{"name":"refrain"}'
+# → 200, body: {"received":{"name":"refrain"}}
+
+curl -i -X POST http://localhost:3000/api/docs \
+  -H "Content-Type: application/json" \
+  -d '{bad json'
+# → 400 invalid_json, and THE SERVER IS STILL RUNNING
 ```
 
 **Two responses are a real bug.** If a middleware sends a response *and* calls
@@ -386,8 +427,8 @@ Your server handled one request fine. Now make it handle 5,000.
 
 ```js
 // ❌ Blocks everything. One slow request stops all users.
-server = createServer(async (req, res) => {
-  const data = await someSlowDatabaseCall()   // 500ms
+const server = createServer(async (req, res) => {
+  const data = await someSlowDatabaseCall()   // 500ms — yields, does NOT block
   res.end(data)
 })
 ```
@@ -419,9 +460,11 @@ waiting on I/O rather than burning CPU.
 ### Where this breaks: CPU-bound work
 
 ```js
-// ❌ This blocks ALL other requests for 4 seconds
-server = createServer(async (req, res) => {
-  const hash = await crypto.subtle.digest("SHA-512", hugeBuffer)
+// ❌ This blocks ALL other requests while it runs
+const server = createServer(async (req, res) => {
+  const hash = await crypto.subtle.digest("SHA-512", hugeBuffer)  // thread pool: fine
+  const sorted = hugeArray.sort((a, b) => a - b)                  // main thread: blocks
+  res.end("ok")
 })
 ```
 

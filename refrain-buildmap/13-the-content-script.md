@@ -1,6 +1,6 @@
 # Chapter 13 — The Content Script
 
-> **Day 14 · Goal: the extension reports "I found 14 fields" on a real Google Form.**
+> **Day 13 · Goal: the extension reports "I found 14 fields" on a real Google Form.**
 >
 > This is your **first demo checkpoint.** Stop here on Day 9, record 40 seconds, send it to
 > one person. Do not proceed to Chapter 14 until this works.

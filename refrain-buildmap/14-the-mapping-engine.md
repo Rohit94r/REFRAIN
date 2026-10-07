@@ -1,6 +1,6 @@
 # Chapter 14 — The Mapping Engine
 
-> **Day 15 · Goal: all 14 fields mapped, rule-based, with a confidence score and a reason.**
+> **Day 14 · Goal: all 14 fields mapped, rule-based, with a confidence score and a reason.**
 >
 > This chapter contains the moat. Everything else in the product is plumbing. This is the part
 > nobody else has, and the part that makes a fill correct instead of plausible.
