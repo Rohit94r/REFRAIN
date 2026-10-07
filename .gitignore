@@ -1,0 +1,5 @@
+
+# The product monorepo lives here but is its own git repository.
+# Committing it as an embedded repo would make clones of this repo
+# contain a broken nested repo. See Chapter 2, Step 1.
+refrain/

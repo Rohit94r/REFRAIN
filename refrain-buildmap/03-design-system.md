@@ -44,13 +44,15 @@ lost. If a chip is noisy, they stop reading them and the whole screen becomes "A
 The chips have to be **scannable in peripheral vision while the user reads the values** —
 which means one shape per meaning, one colour per meaning, and zero decoration.
 
-| Chip | Meaning | Shape | Colour |
-|---|---|---|---|
-| `✓` | from your profile | filled circle | brand green |
-| `📄` | extracted from a document | filled circle | brand blue |
-| `✎` | your saved Verse, adapted | filled circle | brand purple |
-| `⚠` | needs your input | **hollow** triangle | amber |
-| `🔒` | low confidence — please verify | **hollow** lock | red |
+
+| Chip | Meaning                        | Shape               | Colour       |
+| ---- | ------------------------------ | ------------------- | ------------ |
+| `✓`  | from your profile              | filled circle       | brand green  |
+| `📄` | extracted from a document      | filled circle       | brand blue   |
+| `✎`  | your saved Verse, adapted      | filled circle       | brand purple |
+| `⚠`  | needs your input               | **hollow** triangle | amber        |
+| `🔒` | low confidence — please verify | **hollow** lock     | red          |
+
 
 **The shape change matters more than the colour.** Roughly 1 in 12 men has a red-green
 colour vision deficiency, and your users are in a college library on a cheap laptop screen.
@@ -62,15 +64,17 @@ You are on **Tailwind v4**, which is CSS-first. Almost every tutorial, course, a
 suggestion from before early 2025 shows v3 with a `tailwind.config.js` file. If you follow
 one, you will spend an hour confused.
 
-| | v3 | v4 |
-|---|---|---|
-| Config | `tailwind.config.js` | **CSS, in `@theme`** |
-| Content paths | `content: [...]` array | Automatic |
-| Import | `@tailwind base/components/utilities` | **`@import "tailwindcss"`** |
-| Dark mode | `darkMode: "class"` config | **`@custom-variant dark (&:where(.dark, .dark *))`** |
-| Config format | JS object | Any CSS value, including `oklch()` |
 
-**v4 is the default when you run `pnpm add -D tailwindcss`.** Use v4. If a tutorial tells
+|               | v3                                    | v4                                               |
+| ------------- | ------------------------------------- | ------------------------------------------------ |
+| Config        | `tailwind.config.js`                  | **CSS, in** `@theme`                             |
+| Content paths | `content: [...]` array                | Automatic                                        |
+| Import        | `@tailwind base/components/utilities` | `@import "tailwindcss"`                          |
+| Dark mode     | `darkMode: "class"` config            | `@custom-variant dark (&:where(.dark, .dark *))` |
+| Config format | JS object                             | Any CSS value, including `oklch()`               |
+
+
+**v4 is the default when you run** `pnpm add -D tailwindcss`**.** Use v4. If a tutorial tells
 you to create `tailwind.config.js`, it is wrong for your version.
 
 ### `oklch()` — and why warm is a colour decision, not a hue
@@ -89,6 +93,8 @@ The advantage over hex is that a whole palette generated at one lightness *looks
 of what separates "warm companion" from "enterprise dashboard."
 
 ---
+
+
 
 ## Step 1 — Tailwind v4 and the token file
 
@@ -205,6 +211,8 @@ privacy claims must survive a network tab being open.
 
 ---
 
+
+
 ## Step 2 — shadcn/ui
 
 ```bash
@@ -213,7 +221,7 @@ pnpm dlx shadcn@latest add button card input label badge dialog
 ```
 
 shadcn copies component source into your repo instead of installing a library. That is the
-point: **you own it, and you can make `Button` do exactly what Fermata needs.**
+point: **you own it, and you can make** `Button` **do exactly what Fermata needs.**
 
 Rename the shadcn tokens to point at your brand ramp, then add only what you need:
 
@@ -221,10 +229,12 @@ Rename the shadcn tokens to point at your brand ramp, then add only what you nee
 - `card` — the review row container
 - `input`, `label`, `badge`, `dialog`
 
-**Do not add `select`, `combobox`, or `dropdown-menu` yet.** You do not know what the review
+**Do not add** `select`**,** `combobox`**, or** `dropdown-menu` **yet.** You do not know what the review
 screen needs until Chapter 9. Adding them now is how design systems become 4,000 unused lines.
 
 ---
+
+
 
 ## Step 3 — `packages/ui` structure
 
@@ -275,7 +285,11 @@ app turns black.** This bug appears as "the design system broke and I changed no
 
 ---
 
+
+
 ## Step 4 — The mascot
+
+
 
 ### `Mascot.tsx`
 
@@ -341,9 +355,11 @@ export function Mascot({ state, ready, needs, className }: MascotProps) {
 }
 ```
 
-> **`role="status"` + `aria-live="polite"`** — a screen reader announces the state change
+> `role="status"` **+** `aria-live="polite"` — a screen reader announces the state change
 > without interrupting. This is not decoration. §11 says you hold sensitive student data; an
 > inaccessible review screen is a trust failure too.
+
+
 
 ### `mascot.css` — the motion rules
 
@@ -396,6 +412,8 @@ export function Mascot({ state, ready, needs, className }: MascotProps) {
 .mascot__count--needs { background: var(--color-prov-input); color: var(--color-brand-900); }
 ```
 
+
+
 ### The state machine
 
 ```tsx
@@ -423,8 +441,10 @@ export function mascotReducer(s: typeof INITIAL, e: FormEvent): typeof INITIAL {
 ```
 
 > **This is XState territory in Chapter 9.** For now the reducer is fine and you can read it
-> at a glance. When the states start having guards — *"do not enter `attacca` while low
+> at a glance. When the states start having guards — *"do not enter* `attacca` *while low
 > confidence fields remain"* — that is when you migrate, and you will know exactly why.
+
+
 
 ### Draw the mascot
 
@@ -440,6 +460,8 @@ Four tiny SVGs. Do not spend a day in Figma. **A student will see this in a 40px
 panel.** Spend the day on the chips instead.
 
 ---
+
+
 
 ## Step 5 — Provenance chips
 
@@ -508,7 +530,7 @@ export function ProvenanceChip({ provenance, locked, editedByUser }: ChipProps) 
 .chip--manual { --chip: var(--color-ink-muted); }
 ```
 
-> **`color-mix()` is the trick that makes this work.** One CSS variable carries the hue; the
+> `color-mix()` **is the trick that makes this work.** One CSS variable carries the hue; the
 > background is that hue at 14% and the border at 32%. You get a full tappable palette from
 > five tokens, and dark mode works with zero extra code because the mix inherits the hue.
 
@@ -516,6 +538,8 @@ export function ProvenanceChip({ provenance, locked, editedByUser }: ChipProps) 
 the list, not in a tooltip per row.
 
 ---
+
+
 
 ## Step 6 — Wire it up and look at it
 
@@ -562,6 +586,8 @@ the content — it fails, and you simplify.
 
 ---
 
+
+
 ## Step 7 — Commit
 
 ```bash
@@ -571,43 +597,51 @@ git commit -m "feat(ui): tailwind v4 tokens, mascot 4 states (Rest/Listening/Fer
 
 ---
 
+
+
 ## Your 60/40 split for this chapter
 
-| Task | Who |
-|---|---|
-| `app.css` — every token, the `oklch` ramp, dark mode overrides | **You.** This is your design system |
-| The mascot state machine and `mascotReducer` | **You** |
-| `ProvenanceChip` component + the shape-vs-colour reasoning | **You** |
-| Four mascot SVG paths | **OpenCode** — then edit them by hand to match your taste |
-| shadcn init and component installation | **OpenCode** |
-| The `App.tsx` playground | **OpenCode** — then delete it before Chapter 4 |
-| Figma mascot design | **Neither.** Four tiny SVGs. Move on. |
+
+| Task                                                           | Who                                                       |
+| -------------------------------------------------------------- | --------------------------------------------------------- |
+| `app.css` — every token, the `oklch` ramp, dark mode overrides | **You.** This is your design system                       |
+| The mascot state machine and `mascotReducer`                   | **You**                                                   |
+| `ProvenanceChip` component + the shape-vs-colour reasoning     | **You**                                                   |
+| Four mascot SVG paths                                          | **OpenCode** — then edit them by hand to match your taste |
+| shadcn init and component installation                         | **OpenCode**                                              |
+| The `App.tsx` playground                                       | **OpenCode** — then delete it before Chapter 4            |
+| Figma mascot design                                            | **Neither.** Four tiny SVGs. Move on.                     |
+
 
 ---
 
+
+
 ## Gotchas in this chapter
 
-**Every colour turns black after `pnpm install`.** `packages/ui` is missing
+**Every colour turns black after** `pnpm install`**.** `packages/ui` is missing
 `"sideEffects": ["**/*.css"]`. See Step 3.
 
 **Your brand colour looks different on your laptop than the design file.** `oklch()` is
 perceptual and colour-managed displays render it differently from uncalibrated ones. Pick
 the lightness, check it on the *worst* screen you own, and stop fiddling.
 
-**`bg-brand-500` does not exist.** Tailwind v4 generates utilities from `--color-*` tokens in
+`bg-brand-500` **does not exist.** Tailwind v4 generates utilities from `--color-`* tokens in
 `@theme`. A token named `--color-brand-500` inside `@theme` gives you `bg-brand-500`. If you
 put the tokens in `:root` instead of `@theme`, the utilities are never generated.
 
 **Dark mode only half works.** You used a raw colour like `text-slate-800` somewhere instead
 of `text-ink`. Grep for `-slate-`, `-gray-`, `-zinc-`, `-neutral-` and replace every one.
 
-**A tutorial told you to create `tailwind.config.js`.** You are on v4. Delete it. Config
+**A tutorial told you to create** `tailwind.config.js`**.** You are on v4. Delete it. Config
 lives in CSS now.
 
 **The mascot animates and you cannot stop it.** You skipped the `prefers-reduced-motion`
 block in `app.css`. Go back.
 
 ---
+
+
 
 ## Verify before moving on
 
@@ -621,14 +655,16 @@ block in `app.css`. Go back.
 
 ---
 
+
+
 ## Check yourself before Chapter 4
 
 1. **Why does the mascot have exactly four states? What breaks if you add a fifth?**
 2. **Why do the two "you must act" chips have a different shape rather than just a different colour?**
-3. **What happens if `@refrain/ui` loses `sideEffects`?**
-4. **Why is `role="status"` on the mascot an accessibility requirement, not a nicety?**
-5. **A component in your review screen uses `bg-slate-100`. What breaks in dark mode, and why?**
-6. **Where does `--color-brand-500`'s lightness of 0.68 come from? What if you made it 0.45?**
+3. **What happens if** `@refrain/ui` **loses** `sideEffects`**?**
+4. **Why is** `role="status"` **on the mascot an accessibility requirement, not a nicety?**
+5. **A component in your review screen uses** `bg-slate-100`**. What breaks in dark mode, and why?**
+6. **Where does** `--color-brand-500`**'s lightness of 0.68 come from? What if you made it 0.45?**
 
 ---
 
