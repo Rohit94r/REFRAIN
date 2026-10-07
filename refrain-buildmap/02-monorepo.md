@@ -70,7 +70,7 @@ That is the whole distinction. A library has no `main` script.
 > Giving the side panel its own Vite app would mean **two build systems for one UI**, and the
 > promise that the side panel and the web app are "the same app with two doors" would be a lie
 > the first time a token or a component drifted between them. Two apps, two build outputs: `web`
-> and `extension`. Chapter 7 builds the side panel as an entry point.
+> and `extension`. Chapter 13 builds the side panel as an entry point.
 
 ### `packages/fields` is an addition to the master document
 
@@ -84,7 +84,7 @@ If that schema lives in `mapping`, then `ui` must depend on `mapping` — a UI l
 on an engine. Wrong direction. `fields` is that definition with **zero dependencies**, and
 both `ui` and `mapping` depend on it. That is the requirement from §10 made concrete.
 
-> This is a deliberate deviation. **Record it as a §19 decision when you finish Chapter 8**,
+> This is a deliberate deviation. **Record it as a §19 decision when you finish Chapter 14**,
 > at the moment you feel the benefit. Documentation written from theory rots.
 
 ### Why `workspace:*` and not a version number
@@ -97,7 +97,7 @@ both `ui` and `mapping` depend on it. That is the requirement from §10 made con
 tries to download it. When you ship, you replace it with a real version.
 
 This is why pnpm's strictness matters: **you cannot import a package you did not declare.**
-You will hit this in Chapter 3 and it will look like a bug. It is a feature.
+You will hit this in Chapter 9 and it will look like a bug. It is a feature.
 
 ---
 
@@ -111,7 +111,7 @@ code .          # or your editor
 
 > **Where this lives matters.** Put `refrain/` **outside** `refrain-buildmap/`. They are two
 > different things: one is the curriculum, one is the thing the curriculum builds. If you nest
-> the monorepo inside its own instructions, every `git status` in Chapter 4 is confusing and
+> the monorepo inside its own instructions, every `git status` in Chapter 10 is confusing and
 > you will eventually commit `node_modules` into the docs repo.
 >
 > ```bash
@@ -189,7 +189,7 @@ onlyBuiltDependencies:
 > get a confusing "esbuild not found" hours later. If you add a dependency that needs a build
 > step and it mysteriously fails, this list is why.
 >
-> **Keep the list short.** Chapter 18 makes this a security posture: every entry is code that
+> **Keep the list short.** Chapter 19 makes this a security posture: every entry is code that
 > runs with your credentials at install time. Three entries is a deliberate choice. A list of
 > twenty is a supply-chain risk you did not decide on purpose.
 
@@ -265,7 +265,7 @@ dist/
 > is a §11 privacy violation with your own git history as evidence. Put them in **before** you
 > write the extractor, not after.
 >
-> **Chapter 17 adds one more line you will need later:**
+> **Chapter 18 adds one more line you will need later:**
 > `apps/extension/.env` — the extension's dev secrets must never be committed either.
 
 ### `tsconfig.base.json` (root — do not build from this again)
@@ -294,8 +294,8 @@ dist/
 }
 ```
 
-> **Why the root file says "do not build from this again."** In Chapter 5 you add `paths`
-> aliases for the web app, and in Chapter 7 you find that the extension needs different `lib`
+> **Why the root file says "do not build from this again."** In Chapter 11 you add `paths`
+> aliases for the web app, and in Chapter 13 you find that the extension needs different `lib`
 > settings than the web. If every package copies this file and edits it, you will have eight
 > subtly different `strict` setups and no way to tell them apart. The next step is the fix.
 
@@ -504,7 +504,7 @@ export const FormFieldSchema = z
    * `.strict()` on the FIELD, not on the form.
    *
    * Zod strips unknown keys by default, which is correct for a wire
-   * protocol (Chapter 17) but WRONG here: a content script that
+   * protocol (Chapter 18) but WRONG here: a content script that
    * accidentally includes `value: 87.4` would have it silently
    * dropped, and you would debug a missing field instead of a typo.
    * Unknown keys on a field are always a bug, so reject them loudly.
@@ -539,13 +539,13 @@ export const withSuffix = (id: string, suffix: string): string => `${id}__${suff
 ```
 
 > **`FormSchema` is deliberately NOT `.strict()`, and the asymmetry with `FormFieldSchema` is
-> the point.** Chapter 17's rule is "strip unknown keys on every message boundary, because you
+> the point.** Chapter 18's rule is "strip unknown keys on every message boundary, because you
 > cannot force a shipped extension to update." That rule is about *adding* fields over time.
 > A field object is different: a key you do not recognise there is a typo or a bug, not a
 > future version, because the field's identity is its label and its kind, not a growing bag of
 > properties. Strict where a mistake is silent, lenient where a mistake is only "older version."
 >
-> **Why `withSuffix` exists at all.** Chapter 7 has to write the same field twice when a form
+> **Why `withSuffix` exists at all.** Chapter 13 has to write the same field twice when a form
 > lives in an iframe — once in the top frame's ID space and once in the child's. `email` becomes
 > `email__frame3`. A helper means that convention is in one place instead of in four
 > call sites that each concatenate a slightly different string.
@@ -554,13 +554,13 @@ export const withSuffix = (id: string, suffix: string): string => `${id}__${suff
 
 | Decision                               | What it prevents                                                                                                    |
 | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `value` is always `string`             | Chapter 7's silent-empty-submit bug. This is the single most important line in the file.                            |
+| `value` is always `string`             | Chapter 13's silent-empty-submit bug. This is the single most important line in the file.                            |
 | `confidence` requires a `reason`       | You will never be able to show "why" on the review screen. There is no bare-float fallback.                         |
 | `provenance` is required, not optional | Optional means skipped. Skipped means the review screen lies.                                                       |
 | `editedByUser`                         | This is your **Phase 1 success metric** — correction rate must *decrease*. You cannot measure it without this flag. |
 | `REVIEW_THRESHOLD` is one constant     | One place to change the bar. Never a magic number in a resolver.                                                    |
 | `blocked` on the form                  | §11's hard "no" list is enforced in the **schema**, so it is impossible to forget at the call site.                  |
-| `frameId`                              | Chapter 7's iframe gotcha, solved in the type instead of in a bug report.                                           |
+| `frameId`                              | Chapter 13's iframe gotcha, solved in the type instead of in a bug report.                                           |
 
 ### `src/index.test.ts` — write this yourself
 
@@ -611,7 +611,7 @@ describe("FormSchema", () => {
 })
 
 describe("FieldValue", () => {
-  it("rejects a numeric value — this is the Chapter 7 bug, caught at the schema", () => {
+  it("rejects a numeric value — this is the Chapter 13 bug, caught at the schema", () => {
     const r = FieldValue.safeParse({
       value: 87.4,
       confidence: { score: 0.98, reason: "10th percentage, marksheet p.3" },
@@ -748,7 +748,7 @@ ls packages/*/tsconfig.json
 
 ## Step 5 — `apps/` (skeletons only)
 
-Do not build these yet. Chapter 5 builds the web app and Chapter 7 builds the extension.
+Do not build these yet. Chapter 11 builds the web app and Chapter 13 builds the extension.
 
 ```bash
 mkdir -p apps/web/src
@@ -823,7 +823,7 @@ mkdir -p apps/extension/entrypoints/sidepanel apps/extension/entrypoints/content
 ### The side panel is an entry point, not an app
 
 ```bash
-# Chapter 7 builds these for real. Create the dirs now so the
+# Chapter 13 builds these for real. Create the dirs now so the
 # tree matches what you will be told to write.
 apps/extension/entrypoints/
 ├── sidepanel/
@@ -844,7 +844,7 @@ export default defineConfig({
   manifest: {
     name: "Refrain",
     permissions: ["sidePanel", "storage"],
-    // Surgical, not <all_urls>. Chapter 18 explains why the
+    // Surgical, not <all_urls>. Chapter 19 explains why the
     // short list is a trust feature, not a limitation.
     host_permissions: ["https://forms.google.com/*"],
   },
@@ -888,11 +888,11 @@ pnpm typecheck
 ```
 
 Expected: **every package with a `typecheck` script reports success.** If anything fails, you
-have a dependency cycle or a missing preset. Fix it now, not in Chapter 8 when a cycle makes an
+have a dependency cycle or a missing preset. Fix it now, not in Chapter 14 when a cycle makes an
 unrelated test fail and you spend an hour blaming the wrong package.
 
 > **Do not expect a count of seven.** `packages/tsconfig` has no scripts, so six workspaces
-> report here: five `packages/*` plus `apps/web` and `apps/extension`. **Chapter 5 and 7 have
+> report here: five `packages/*` plus `apps/web` and `apps/extension`. **Chapter 11 and 7 have
 > not written the app entry points yet, so `apps/*` will report success trivially or error on a
 > missing `vite.config.ts`.** Both are fine today. What you are proving is that the *library*
 > packages typecheck.
@@ -956,7 +956,7 @@ git commit --allow-empty -m "chore(monorepo): verified pnpm dev resolves the gra
 | # | Task | Who | Why |
 | - | ---- | --- | --- |
 | **Step 1 — the root** ||||
-| 1 | `mkdir refrain`, `git init`, decide where it lives | **You** | Nesting the monorepo inside its own docs repo causes the `git status` mess in Chapter 4 |
+| 1 | `mkdir refrain`, `git init`, decide where it lives | **You** | Nesting the monorepo inside its own docs repo causes the `git status` mess in Chapter 10 |
 | 2 | Root `package.json` incl. `packageManager`, `check` script | **You** | You will run `pnpm check` for 23 days |
 | 3 | `pnpm-workspace.yaml` + `onlyBuiltDependencies` | **You** | ⚠️ Its absence means nothing links, and the error does not say so |
 | 4 | `turbo.json` — `tasks`, `dependsOn`, `persistent` | **You** | You will debug this at 11pm, and you cannot debug a file you did not write |
@@ -969,7 +969,7 @@ git commit --allow-empty -m "chore(monorepo): verified pnpm dev resolves the gra
 | 9 | `package.json` + `tsconfig.json` | **You** | You set `exports` yourself, and that choice is a real decision |
 | 10 | **`src/index.ts` — every schema, field, and comment** | **You. Entirely.** | ⚠️ **The contract. See below** |
 | 11 | The `.strict()` decision on `FormFieldSchema` only | **You** | It is a judgement call about silent vs loud failures |
-| 12 | `withSuffix` and the iframe ID convention | **You** | Chapter 7 depends on this existing in one place |
+| 12 | `withSuffix` and the iframe ID convention | **You** | Chapter 13 depends on this existing in one place |
 | 13 | **The 7 tests, especially the fixed `.strict()` one** | **You** | ⚠️ The most valuable moment in the chapter |
 | 14 | **Understand why the loose test passed for the wrong reason** | **You** | The single most transferable lesson in Chapter 2 |
 | 15 | Run `pnpm test`, break a test, read the diff | **You** | Reading a failure is the skill |
@@ -1035,10 +1035,10 @@ react-router, and all five @refrain/* packages as workspace:*.
 >
 > **`packages/fields/src/index.ts` is 100% yours, and it is the only file in the chapter that
 > is.** It is the contract that the web app, the extension, the mapping engine, the extractor,
-> and eventually the API all import. **Chapter 16's entire argument for keeping the server in
+> and eventually the API all import. **Chapter 7's entire argument for keeping the server in
 > TypeScript rests on this one file** — if the schema lived in Python instead, that chapter
 > would have no answer. **If you let OpenCode write it, you will not be able to explain why
-> `FieldValue.value` is a string, and that is the one question that explains Chapter 7's worst
+> `FieldValue.value` is a string, and that is the one question that explains Chapter 13's worst
 > bug.**
 
 > **Your audit of task 16 is worth more than task 16 itself.** Six delegated tasks produce six
@@ -1119,7 +1119,6 @@ pinning pnpm and are mixing package managers. Use `pnpm` everywhere, including i
 10. **Three programs ship from two apps. Which two, and why is that one app?**
 
 ---
-
-**Next: [Chapter 3 — The Design System](./03-design-system.md)** —
-Tailwind v4 tokens, shadcn/ui, dark mode, `packages/ui`, the four mascot states, and the
-provenance chips that become the visual signature of the product.
+**Next: [Chapter 3 — What a Server Actually Is](./03-node-and-http.md)** — what a server is,
+how Node runs one, HTTP status codes, middleware, and the event loop. Built with no
+framework, because every framework is a wrapper around the loop you write there.

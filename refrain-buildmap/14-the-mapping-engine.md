@@ -1,6 +1,6 @@
-# Chapter 8 — The Mapping Engine
+# Chapter 14 — The Mapping Engine
 
-> **Days 9–10 · Goal: all 14 fields mapped, rule-based, with a confidence score and a reason.**
+> **Day 15 · Goal: all 14 fields mapped, rule-based, with a confidence score and a reason.**
 >
 > This chapter contains the moat. Everything else in the product is plumbing. This is the part
 > nobody else has, and the part that makes a fill correct instead of plausible.
@@ -41,7 +41,7 @@ statistical version:
 > confident interface.**
 
 So the resolver has a hard gate. Below `REVIEW_THRESHOLD`, the output is not a value at all —
-it is `needs-input`, and the review screen asks the user. `isSafeToFill` from Chapter 6 is
+it is `needs-input`, and the review screen asks the user. `isSafeToFill` from Chapter 12 is
 that gate, and it lives in the vault so there is exactly one place to audit it.
 
 **This is the single decision that separates Refrain from every "AI autofill" product.** They
@@ -72,7 +72,7 @@ Three hundred of these pairs, hand-written, each one an afternoon of looking at 
 months you spent noticing that Indian portals say `Class X Aggregate` for what everyone else
 calls GPA.
 
-This is why the Playwright script in Chapter 7 was the highest-leverage 40% in that chapter.
+This is why the Playwright script in Chapter 13 was the highest-leverage 40% in that chapter.
 It generates the raw material. The labelling is yours, and it is slow, and it is the product.
 
 ### Why this must be a pure function
@@ -783,7 +783,7 @@ raw label and the normalised label on every mapping during a debug session.
 
 ---
 
-## Check yourself before Chapter 9
+## Check yourself before Chapter 15
 
 1. **Why is `Math.min` on the two confidences correct, and what does `Math.max` break?**
 2. **Why must a coercion failure return `null` rather than the original value?**
@@ -795,6 +795,6 @@ raw label and the normalised label on every mapping during a debug session.
 
 ---
 
-**Next: [Chapter 9 — Fermata](./09-fermata-review-screen.md)** — the hero screen. Provenance
+**Next: [Chapter 15 — Fermata](./15-fermata-review-screen.md)** — the hero screen. Provenance
 on every row, inline editing, the missing-info path, XState, and the moment the user presses
 submit and Refrain does not.

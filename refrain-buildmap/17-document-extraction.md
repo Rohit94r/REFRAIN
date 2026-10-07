@@ -1,6 +1,6 @@
-# Chapter 11 — Document Extraction
+# Chapter 17 — Document Extraction
 
-> **Day 15 · Goal: a text PDF and a photographed marksheet both produce reviewable facts with
+> **Day 18 · Goal: a text PDF and a photographed marksheet both produce reviewable facts with
 > verifiable provenance.**
 >
 > The least glamorous chapter and the one that decides whether Refrain saves the user ten
@@ -61,7 +61,7 @@ automation into trusted data.** Build it as a first-class field, not as a toolti
 ### Never `JSON.stringify` a PDF
 
 This one will corrupt data and OOM your panel, and it is an easy mistake because
-`seal()` in Chapter 6 does `JSON.stringify` internally — which is *correct* for your profile
+`seal()` in Chapter 12 does `JSON.stringify` internally — which is *correct* for your profile
 objects and *catastrophic* for a 4MB binary blob.
 
 You need a dedicated byte-sealing path. Add it now:
@@ -600,7 +600,7 @@ You gained an audit trail that now includes the human.
 
 > **This is why `SourceKind` includes `manual` in Chapter 2's Zod enum.** It is not a
 > lower-quality `document`. It is a *different kind of truth*, and it deserves its own chip and
-> its own colour. Chapter 3's `ProvenanceChip` already renders it as "you typed this" — which
+> its own colour. Chapter 9's `ProvenanceChip` already renders it as "you typed this" — which
 > is honest, because from the system's perspective, it is.
 
 ---
@@ -792,9 +792,9 @@ sideways photo is the one that finds the bugs — find or make it before you shi
 
 ---
 
-## Check yourself before Chapter 12
+## Check yourself before Chapter 18
 
-> **This is the last frontend chapter.** Chapter 12 opens the backend, and with it the
+> **This is the last frontend chapter.** Chapter 4 opens the backend, and with it the
 > uncomfortable work of rewriting §11 to tell the truth about a server existing. If any of these
 > ten answers is shaky, this is the last cheap moment to fix it.
 
@@ -809,5 +809,5 @@ sideways photo is the one that finds the bugs — find or make it before you shi
 
 ---
 
-**Next: [Chapter 12 — Backend Foundation](./12-backend-foundation.md)** — what MongoDB changes,
+**Next: [Chapter 18 — Backend Foundation](./04-backend-foundation.md)** — what MongoDB changes,
 what §11 now has to say, and how to build a sync backend without giving up end-to-end encryption.

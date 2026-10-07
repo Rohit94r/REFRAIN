@@ -1,6 +1,6 @@
-# Chapter 16 — The API Reference
+# Chapter 7 — The API Reference
 
-> **Day 20 · Goal: every endpoint written, documented, and covered by a contract test.**
+> **Day 7 · Goal: every endpoint written, documented, and covered by a contract test.**
 >
 > This is the lookup document. Chapters 12–15 taught *why* each decision was made; this one is
 > the complete surface, so you can implement against it without rereading four chapters.
@@ -13,7 +13,7 @@
 
 A tutorial explains reasoning. A reference does not. If this chapter says "returns 409 on
 `syncVersion` mismatch" without explaining that it exists to prevent a half-migrated vault, you
-should go read Chapter 15 — and then come back.
+should go read Chapter 8 — and then come back.
 
 What this chapter owes you is **completeness and exactness**: every path, every field, every
 status code, every error code. A reference that is 90% complete is worse than none, because
@@ -43,7 +43,7 @@ outage. A sync API with forty endpoints is a sync API nobody can reason about.
 You do **not** need `/v1/` on anything yet. Reasoning:
 
 - The sync protocol is the only one with a real compatibility problem, and it solves that
-  itself with `SYNC_VERSION` in the payload (Chapter 15).
+  itself with `SYNC_VERSION` in the payload (Chapter 8).
 - Auth shapes are consumed by clients you control. A 15-minute access token means a broken
   auth shape is a 15-minute outage, not a permanent one.
 - A `/v2/` path you never exercise is dead code, and dead API versions are how you end up
@@ -232,7 +232,7 @@ export const SyncVersionMismatch = ApiError.extend({
 > client tries to refresh, the refresh also 401s, the client tries to refresh again, forever.
 > Revoked must be **403** — "you are who you say you are, and the answer is still no."
 >
-> Chapter 14's `requireAuth` throws `unauthorized` for a revoked device. **That is a bug.** Fix
+> Chapter 6's `requireAuth` throws `unauthorized` for a revoked device. **That is a bug.** Fix
 > it to `forbidden`, and verify the client stops refreshing rather than looping.
 
 ---
@@ -320,7 +320,7 @@ const RegisterRequest = z.object({
 
 ```ts
 auth.post("/register", limitAuth, rateLimitRefresh,
-  zValidator("json", RegisterRequest), async (c) => { /* Chapter 14 Step 3 */ })
+  zValidator("json", RegisterRequest), async (c) => { /* Chapter 6 Step 3 */ })
 ```
 
 ### `POST /auth/login`
@@ -333,7 +333,7 @@ const LoginRequest = z.object({
 ```
 
 Same 200 shape as register. Same 401 message for unknown-email and wrong-key, **including
-timing** — Chapter 14 Step 4.
+timing** — Chapter 6 Step 4.
 
 ### `POST /auth/refresh`
 
@@ -376,7 +376,7 @@ const LogoutRequest = z.object({ refreshToken: z.string().min(32).max(128) })
 | 200 | Revoked (or the token did not exist — same response) |
 | 401 | No access token |
 
-> **Logout revokes the device, not the account.** Your phone stays signed in. Chapter 14 Step 8:
+> **Logout revokes the device, not the account.** Your phone stays signed in. Chapter 6 Step 8:
 > revoking access is not deleting data, and the user should not have to log in everywhere to
 > log out of one machine.
 
@@ -449,7 +449,7 @@ Public. No auth. Ed25519 public key, standard JWKS format.
 
 > **`kid` is the key id and it is how rotation works.** When you rotate, the new key gets a new
 > `kid` and both are published during the overlap. Clients cache by `kid`, so a rotation is a
-> config change rather than an outage. This is why Chapter 14 said "add `kid` from the start."
+> config change rather than an outage. This is why Chapter 6 said "add `kid` from the start."
 
 ---
 
@@ -551,7 +551,7 @@ const PullQuery = z.object({
 }
 ```
 
-**No ciphertext. No filename. No label. No value.** This is the whole point of Chapter 13's
+**No ciphertext. No filename. No label. No value.** This is the whole point of Chapter 5's
 collection split, and it is what makes an unchanged device's pull under 1KB.
 
 `docType` is optional and exists for one case: a device that only cares about facts can pull
@@ -669,7 +669,7 @@ const ChangePassphraseRequest = z.object({
 
 **This endpoint uploads wrapped keys only — never document ciphertext.** Changing your
 passphrase on a 12MB document does not re-upload 12MB, because the DEK is random and the
-ciphertext is untouched. Chapter 14 Step 7.
+ciphertext is untouched. Chapter 6 Step 7.
 
 > **`max(2000)` and what happens past it.** A user with 3,000 documents cannot change their
 > passphrase. That is a real limit and you should handle it honestly: return 422 with
@@ -694,7 +694,7 @@ ciphertext is untouched. Chapter 14 Step 7.
 ```
 
 **`byteLength` is metadata the server legitimately holds.** It powers the quota bar in Settings.
-It reveals how much data you have, never what is in it — Chapter 13's boundary, correctly
+It reveals how much data you have, never what is in it — Chapter 5's boundary, correctly
 crossed.
 
 ### `POST /account/export`
@@ -721,7 +721,7 @@ account.post("/export", requireAuth, requireActiveSubscription, async (c) => {
 > useless to the user, and the streaming endpoint itself becomes a credential oracle.
 >
 > **The honest design: export is client-side.** The web app pulls its blobs, decrypts them, and
-> writes `refrain-export-YYYY-MM-DD.json` to your Downloads folder. Chapter 10 Step 4 already
+> writes `refrain-export-YYYY-MM-DD.json` to your Downloads folder. Chapter 16 Step 4 already
 > implements this. The endpoint above exists only to return a clear 404 explaining why, so a
 > confused user is not left wondering.
 
@@ -751,7 +751,7 @@ const DeleteAccountRequest = z.object({
 > revoked right now**, not in seven days — otherwise "delete my account" and "I still have
 > access" are both true, which is the worst possible state.
 >
-> `purgeUser` (Chapter 13 Step 7) runs at `hardDeleteAt` via the platform's scheduled task.
+> `purgeUser` (Chapter 5 Step 7) runs at `hardDeleteAt` via the platform's scheduled task.
 
 ---
 
@@ -796,7 +796,7 @@ const delay = Math.max(retryAfter, 2 ** attempt * 1000) + Math.random() * 250
 
 ## Step 9 — The client
 
-One `SyncSession` from Chapter 14, plus the error narrowing that makes the API typed.
+One `SyncSession` from Chapter 6, plus the error narrowing that makes the API typed.
 
 ```ts
 // packages/vault/src/sync/api.ts
@@ -1116,7 +1116,7 @@ a field that looks perfectly correct.
 
 ---
 
-## Check yourself before Chapter 17
+## Check yourself before Chapter 8
 
 1. **Why does `pull` return metadata and `blobs` return ciphertext, as two endpoints?**
 2. **What does `status: "duplicate"` mean, and why is it not an error?**
@@ -1131,6 +1131,6 @@ a field that looks perfectly correct.
 
 ---
 
-**Next: [Chapter 17 — CI/CD & Deployment](./17-cicd-deploy.md)** — GitHub Actions, the
+**Next: [Chapter 8 — CI/CD & Deployment](./18-cicd-deploy.md)** — GitHub Actions, the
 extension zip versus the web deploy versus the API deploy, secrets, migrations, and what to do
 when a deploy goes wrong at 1am.

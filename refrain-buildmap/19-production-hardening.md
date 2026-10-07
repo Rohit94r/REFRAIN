@@ -1,6 +1,6 @@
-# Chapter 18 — Production Hardening
+# Chapter 19 — Production Hardening
 
-> **Day 22 · Goal: know your numbers, pass an accessibility audit, and understand what breaks
+> **Day 20 · Goal: know your numbers, pass an accessibility audit, and understand what breaks
 > at 10,000 users.**
 >
 > The chapter between "it works" and "it works for someone else on a bad phone."
@@ -11,7 +11,7 @@
 
 ### This chapter is about surfaces you cannot see failing
 
-The three bugs in Chapter 7 produce an obvious symptom: *"filled but nothing arrived."* You find
+The three bugs in Chapter 13 produce an obvious symptom: *"filled but nothing arrived."* You find
 them in an afternoon.
 
 The problems in this chapter produce **no symptom at all**:
@@ -151,7 +151,7 @@ console.info(`vault ready in ${performance.now() - t0}ms`)
 > crackable.
 >
 > The correct fix for perceived slowness is a **visible progress state** during derivation, not
-> a weaker KDF. Chapter 6's `status: "deriving"` exists for exactly this.
+> a weaker KDF. Chapter 12's `status: "deriving"` exists for exactly this.
 
 ```tsx
 // What the user sees while PBKDF2 runs.
@@ -215,7 +215,7 @@ function couldBeAForm(url: string, doc: Document): boolean {
 > `requestIdleCallback` is not an optimisation here — it is the difference between a tool people
 > keep and a tool people disable, which is the only real metric for browser extensions.
 >
-> **`setTimeout(r, 0)` between frame batches is the fix for multi-frame portals.** Chapter 7
+> **`setTimeout(r, 0)` between frame batches is the fix for multi-frame portals.** Chapter 13
 > taught `allFrames: true` and it is non-negotiable for correctness. The yield is what makes it
 > survivable — without it, scanning a 30-frame embedded form is a visible stall.
 
@@ -237,7 +237,7 @@ console.timeEnd("profile:read")   // target: < 15ms for 40 facts
 | Search across 500 facts | < 50ms | Client-side index, see below |
 
 ```ts
-/** Chapter 13 killed server-side search. So search happens here. */
+/** Chapter 5 killed server-side search. So search happens here. */
 export function buildSearchIndex(facts: ProfileFact[]): Map<string, Set<string>> {
   const index = new Map<string, Set<string>>()
   for (const f of facts) {
@@ -289,7 +289,7 @@ pnpm --filter @refrain/web dlx @axe-core/cli https://refrain.dev \
 <div onClick={submit}>Fill 14 fields</div>        // ❌ not focusable, no keyboard
 ```
 
-> **In Chapter 9 you made the fill button `type: "final"`.** Now verify the *keyboard* path:
+> **In Chapter 15 you made the fill button `type: "final"`.** Now verify the *keyboard* path:
 > tab to it, press Enter. It must work identically to a click. A gate that cannot be reached
 > by keyboard is a gate that excludes keyboard users from correcting their own data — which for
 > §11's user is the most important thing on the screen.
@@ -355,13 +355,13 @@ function ReviewRow({ fact, isFirst, isLast }: Props) {
 ```
 
 > **Removing an outline without replacing it makes your app unusable by keyboard and fails WCAG
-> 2.4.7 outright.** Chapter 3's design-system reset probably contains `*:focus { outline: none }`
+> 2.4.7 outright.** Chapter 9's design-system reset probably contains `*:focus { outline: none }`
 > — it is in half of all Tailwind setups. **Check for it now.** `:focus-visible` gives you the
 > ring only for keyboard interaction, which is better than either extreme.
 
 ### B4 — Colour contrast, and the chips specifically
 
-Chapter 3's chips are `color-mix()`ed provenance colours at 14% background. **That is where
+Chapter 9's chips are `color-mix()`ed provenance colours at 14% background. **That is where
 contrast fails.**
 
 ```bash
@@ -390,7 +390,7 @@ pnpm dlx @axe-core/cli https://refrain.dev --rules color-contrast
 }
 ```
 
-> **Provenance colour must survive both greyscale and low vision.** Chapter 3 already made shape
+> **Provenance colour must survive both greyscale and low vision.** Chapter 9 already made shape
 > carry meaning for the "you must act" chips. This is the other half: the *text inside* the chip
 > has to be legible, and 14% on a light surface routinely lands at 2.8:1 — which is decorative
 > under WCAG, not readable. Mix against the surface, not against transparency, and mix the text
@@ -399,7 +399,7 @@ pnpm dlx @axe-core/cli https://refrain.dev --rules color-contrast
 ### B5 — Motion, again, with teeth
 
 ```css
-/* Chapter 4 wrote this. Verify it actually applies to the
+/* Chapter 10 wrote this. Verify it actually applies to the
    review screen's transitions too, not just the mascot. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -411,7 +411,7 @@ pnpm dlx @axe-core/cli https://refrain.dev --rules color-contrast
 }
 ```
 
-> **The blanket rule, not the targeted one.** Chapter 4 disabled motion on the mascot
+> **The blanket rule, not the targeted one.** Chapter 10 disabled motion on the mascot
 > specifically, which is correct but insufficient — the review screen's slide-ins, the chip
 > transitions, and any future animation are all still moving. A vestibular disorder is triggered
 > by *large-area* motion, and the review list is the largest animated surface in the product.
@@ -440,7 +440,7 @@ expect(screen.getByText("2 fields need you")).toBeInTheDocument()
 | The mascot's alt text | SVG not `aria-hidden` |
 | "button" with no name | Icon button without `aria-label` |
 
-> **The last one is the most common.** Chapter 9's per-row fill button is an icon. Without an
+> **The last one is the most common.** Chapter 15's per-row fill button is an icon. Without an
 > `aria-label` that names the *action and the value*, VoiceOver announces "button" forty times
 > and the review screen becomes unusable. The `aria-label` in B3 is not a nicety — it is the
 > difference between a screen reader user reviewing their own data and giving up.
@@ -487,7 +487,7 @@ add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; prelo
 > whatever the user types. Your review screen *displays their name, CGPA, and address* — a
 > high-value clickjacking target that generic advice never considers.
 >
-> **And `object-src 'none'`** matters here more than in most apps, because Chapter 11 renders
+> **And `object-src 'none'`** matters here more than in most apps, because Chapter 17 renders
 > user-supplied PDFs and images. `blob:` in `img-src` is the legitimate use; `<object>` is not.
 
 ### C2 — The extension's CSP is stricter
@@ -555,7 +555,7 @@ app.use("*", async (c, next) => {
 
 > **`content-length` is advisory and can be absent.** A chunked request has none, so this check
 > is a cheap early rejection, not a defence. The real limit is per-blob `byteLength` in
-> Chapter 16's Zod schema plus the Hono/Node body limit. **Have both.** A missing content-length
+> Chapter 7's Zod schema plus the Hono/Node body limit. **Have both.** A missing content-length
 > header must not be a way to upload 500MB.
 
 ```ts
@@ -567,7 +567,7 @@ const RegisterRequest = z.object({
 }).strict()                                    // strict on the API boundary
 ```
 
-> **`.strict()` on API input, `.nonstrict()` on extension messages.** Chapter 17's rule inverted,
+> **`.strict()` on API input, `.nonstrict()` on extension messages.** Chapter 18's rule inverted,
 > and both halves matter: a public API should reject unknown fields loudly (a typo in a client
 > becomes a 422 you can see), while a cross-boundary message to an extension you cannot force to
 > update must strip unknowns gracefully.
@@ -575,7 +575,7 @@ const RegisterRequest = z.object({
 ### C4 — Rate limiting as abuse prevention
 
 ```ts
-// Beyond Chapter 12's limits: per-account and per-device caps.
+// Beyond Chapter 4's limits: per-account and per-device caps.
 const SYNC_LIMITS = {
   bytesPerHour: 50 * 1024 * 1024,   // ~50MB/hour. A normal week is < 1MB.
   blobCount: 5000,                  // hard ceiling. A person has maybe 200 documents.
@@ -598,7 +598,7 @@ async function assertWithinQuota(userId: string) {
 > costs you money and makes Atlas's free tier unusable. A quota is the difference between
 > "someone is using my API" and "someone is using my API and I am paying for it."
 >
-> **Put the quota number in Settings from day one.** Chapter 5's stub said "A decrypted archive,
+> **Put the quota number in Settings from day one.** Chapter 11's stub said "A decrypted archive,
 > on your machine" next to the delete row. Add a "2.1 MB of 1 GB used" line next to it. Users
 > do not discover limits by hitting them.
 
@@ -635,7 +635,7 @@ describe("sync under load", () => {
         call("POST", "/sync/push", { syncVersion: 1, changes: [makeChange(`fact-${i}`)] }, { token })),
     )
     expect(results.every((r) => r.status === 200)).toBe(true)
-    // The Chapter 15 race, asserted at scale.
+    // The Chapter 8 race, asserted at scale.
     const revisions = results.map((r) => r.revision)
     expect(new Set(revisions).size).toBe(50)
   })
@@ -653,7 +653,7 @@ describe("sync under load", () => {
 
 > **Build for 1,000 users and make it trivial to grow.** A solo project with 100 users does not
 > need a cache layer, a read replica, or a queue. **Complexity you add before you need it is
-> complexity you maintain while debugging something else.** Chapter 12's decision to not require
+> complexity you maintain while debugging something else.** Chapter 4's decision to not require
 > Redis for local dev is the same principle.
 >
 > **The number worth knowing is the free tier's cliff.** Atlas M0 is free and fine until you
@@ -731,7 +731,7 @@ export const SEVERITY_MATRIX = {
 # What exists, right now, for each kind of data:
 #
 #   Client vault (facts, docs)  → on the user's device. No backup. By design.
-#     └─ Mitigation: the export feature (Ch.10). The user's responsibility.
+#     └─ Mitigation: the export feature (Ch.16). The user's responsibility.
 #   MongoDB (ciphertext only)   → Atlas PITR, 7 days.
 #     └─ Restores to the state 7 days ago. Clients re-pull and converge.
 #   Code                        → git, and the remote is the backup.
@@ -750,13 +750,13 @@ export async function rotateSigningKey() {
   // Clients cached the old public key. They keep verifying old
   // tokens until those 15-minute tokens expire. Nothing breaks.
   //
-  // If you skipped `kid` in Chapter 14, this is a hard outage
+  // If you skipped `kid` in Chapter 6, this is a hard outage
   // and there is no graceful path. That is why kid was step one.
 }
 ```
 
 > **Your worst disaster is losing the JWT private key, and it is recoverable only because
-> Chapter 14 made `kid` mandatory.** A key rotation without overlapping kids logs out every
+> Chapter 6 made `kid` mandatory.** A key rotation without overlapping kids logs out every
 > user at once. **Store the private key in two places.** Not one place with a good backup
 > policy — two places, because the failure mode is "the one place has been silently failing for
 > four months."
@@ -766,13 +766,13 @@ export async function rotateSigningKey() {
 | Not built | Why this is the right call |
 |---|---|
 | Admin dashboard | You have 5 users. A `mongosh` is the same tool and takes one second |
-| Redis | Chapter 12's rule: do not add a datastore to avoid adding a datastore |
+| Redis | Chapter 4's rule: do not add a datastore to avoid adding a datastore |
 | Read replicas | 1,000 users does not need one. It costs money and adds a replication-lag failure mode |
 | Message queue | Sync is request/response. There is no work to defer |
 | GraphQL | 12 endpoints, all REST. A resolver layer would be pure ceremony |
 | Multi-region | Mumbai is correct. Mumbai is where your users are |
 | Feature flags | You ship the extension to 100 people, not 100,000. A flag is a permanent tax for a temporary problem |
-| Error tracking in the extension | Chapter 12's Sentry rule. Server-only, and it stays that way |
+| Error tracking in the extension | Chapter 4's Sentry rule. Server-only, and it stays that way |
 
 > **Every item on that list is a thing you could add. None of them is a thing you need.** The
 > discipline of production hardening is not adding capability — it is **knowing which
@@ -839,14 +839,14 @@ content script. `requestIdleCallback`, plus `setTimeout(0)` between frame batche
 
 **Focus vanishes to `<body>` when a review row is removed.** B3's unmount effect.
 
-**VoiceOver says "button" forty times.** Missing `aria-label` on Chapter 9's icon buttons.
+**VoiceOver says "button" forty times.** Missing `aria-label` on Chapter 15's icon buttons.
 
 **Chips are 2.8:1.** `color-mix` at 14% against transparency. Mix against the surface instead.
 
-**Your focus ring is invisible.** `*:focus { outline: none }` from the Chapter 3 reset, with no
+**Your focus ring is invisible.** `*:focus { outline: none }` from the Chapter 9 reset, with no
 replacement. Use `:focus-visible`.
 
-**The mascot animates on the review screen.** Chapter 4's `prefers-reduced-motion` block is
+**The mascot animates on the review screen.** Chapter 10's `prefers-reduced-motion` block is
 targeted at the mascot. Add the blanket global rule.
 
 **Chrome rejects the extension: "remote code."** You fetched Tesseract's WASM from a CDN. MV3
@@ -862,10 +862,10 @@ allowlist entry with a comment, or someone will "fix" it and break offline verif
 
 **The API 413s on files under 10MB.** Your body limit is set to 1MB. Align it with the blob cap.
 
-**A user hit the storage limit and never knew.** Show usage in Settings. Chapter 5's stub is
+**A user hit the storage limit and never knew.** Show usage in Settings. Chapter 11's stub is
 where it goes.
 
-**You lost the JWT private key and every user is logged out.** You skipped `kid` in Chapter 14,
+**You lost the JWT private key and every user is logged out.** You skipped `kid` in Chapter 6,
 or stored the key in one place. See the rotation procedure.
 
 **Atlas charged you $400.** You had no storage alert. M0 → M10 transition happened silently.
@@ -901,7 +901,7 @@ or stored the key in one place. See the rotation procedure.
 
 ---
 
-## Check yourself before Chapter 19
+## Check yourself before Chapter 20
 
 1. **Why is 15MB the right extension budget, and why is "optimise it" wrong?**
 2. **What is the difference between bundled and loaded, and which one matters for panel speed?**
@@ -916,6 +916,6 @@ or stored the key in one place. See the rotation procedure.
 
 ---
 
-**Next: [Chapter 19 — Ship Checklist](./19-ship-checklist.md)** — the final gate. Phase 1 exit
+**Next: [Chapter 20 — Ship Checklist](./20-ship-checklist.md)** — the final gate. Phase 1 exit
 criteria, the Web Store submission, the privacy verification, and the honest list of what this
 product does not do.

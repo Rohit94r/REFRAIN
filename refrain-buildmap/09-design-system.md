@@ -1,6 +1,6 @@
-# Chapter 3 — The Design System
+# Chapter 9 — The Design System
 
-> **Day 3 · Goal: mascot renders all four states, provenance chips designed.**
+> **Day 10 · Goal: mascot renders all four states, provenance chips designed.**
 >
 > The mascot is not decoration. Per §9, it is a **state indicator with four states**, and
 > mascot-driven UI is your distribution strategy — the screenshot students share is your
@@ -230,7 +230,7 @@ Rename the shadcn tokens to point at your brand ramp, then add only what you nee
 - `input`, `label`, `badge`, `dialog`
 
 **Do not add** `select`**,** `combobox`**, or** `dropdown-menu` **yet.** You do not know what the review
-screen needs until Chapter 9. Adding them now is how design systems become 4,000 unused lines.
+screen needs until Chapter 15. Adding them now is how design systems become 4,000 unused lines.
 
 ---
 
@@ -440,7 +440,7 @@ export function mascotReducer(s: typeof INITIAL, e: FormEvent): typeof INITIAL {
 }
 ```
 
-> **This is XState territory in Chapter 9.** For now the reducer is fine and you can read it
+> **This is XState territory in Chapter 15.** For now the reducer is fine and you can read it
 > at a glance. When the states start having guards — *"do not enter* `attacca` *while low
 > confidence fields remain"* — that is when you migrate, and you will know exactly why.
 
@@ -609,7 +609,7 @@ git commit -m "feat(ui): tailwind v4 tokens, mascot 4 states (Rest/Listening/Fer
 | `ProvenanceChip` component + the shape-vs-colour reasoning     | **You**                                                   |
 | Four mascot SVG paths                                          | **OpenCode** — then edit them by hand to match your taste |
 | shadcn init and component installation                         | **OpenCode**                                              |
-| The `App.tsx` playground                                       | **OpenCode** — then delete it before Chapter 4            |
+| The `App.tsx` playground                                       | **OpenCode** — then delete it before Chapter 10            |
 | Figma mascot design                                            | **Neither.** Four tiny SVGs. Move on.                     |
 
 
@@ -657,7 +657,7 @@ block in `app.css`. Go back.
 
 
 
-## Check yourself before Chapter 4
+## Check yourself before Chapter 10
 
 1. **Why does the mascot have exactly four states? What breaks if you add a fifth?**
 2. **Why do the two "you must act" chips have a different shape rather than just a different colour?**
@@ -668,5 +668,5 @@ block in `app.css`. Go back.
 
 ---
 
-**Next: [Chapter 4 — The Mascot](./04-the-mascot.md)** — one geometry, four states, every size,
+**Next: [Chapter 10 — The Mascot](./10-the-mascot.md)** — one geometry, four states, every size,
 zero external assets.

@@ -1,6 +1,6 @@
-# Chapter 14 — Auth
+# Chapter 6 — Auth
 
-> **Day 18 · Goal: register, log in, rotate tokens, revoke one device.**
+> **Day 6 · Goal: register, log in, rotate tokens, revoke one device.**
 >
 > The passphrase is never sent. The credential the server stores cannot derive the key that
 > decrypts your data. Every other auth implementation detail follows from those two facts.
@@ -11,7 +11,7 @@
 
 ### The server authenticates a key it cannot invert
 
-Chapter 13's diagram is the whole design. Restating it as a login sequence:
+Chapter 5's diagram is the whole design. Restating it as a login sequence:
 
 ```
 REGISTER
@@ -46,7 +46,7 @@ LOGIN
 
 **The server cannot reset your passphrase.** There is no recovery flow, because recovering means
 either holding your key or trusting someone who does. The recovery path is the recovery phrase
-in Chapter 6, generated client-side, never uploaded.
+in Chapter 12, generated client-side, never uploaded.
 
 > **If you ever add a "forgot password" email, you have broken the entire architecture.** A
 > server-side reset requires the server to hold something that can re-derive `k_root`. Design
@@ -490,7 +490,7 @@ export async function changePassphrase(
 | Delete a document | Delete two rows | ❌ No | ❌ No |
 
 **None of those require decrypting and re-encrypting document bodies.** That is the payoff of
-per-document random DEKs, and it is why the key hierarchy in Chapter 13 is not over-engineering
+per-document random DEKs, and it is why the key hierarchy in Chapter 5 is not over-engineering
 — it is the difference between a passphrase change taking 200ms and taking an hour.
 
 ```ts
@@ -533,7 +533,7 @@ auth.delete("/devices/:id", requireAuth, async (c) => {
 in your vault, and the next sync from any other device re-uploads whatever is missing.
 
 This is a distinction users get wrong constantly, and getting it wrong means either losing data
-or keeping access you meant to cut. Chapter 18's account page needs both buttons, clearly
+or keeping access you meant to cut. Chapter 19's account page needs both buttons, clearly
 labelled, with different consequences spelled out.
 
 ---
@@ -678,7 +678,7 @@ resolved in `app.ts`. Await the connection before mounting routes.
 
 ---
 
-## Check yourself before Chapter 15
+## Check yourself before Chapter 7
 
 1. **What does a full database compromise give an attacker, and what does it not?**
 2. **Why can there be no "forgot passphrase" email?**
@@ -693,5 +693,5 @@ resolved in `app.ts`. Await the connection before mounting routes.
 
 ---
 
-**Next: [Chapter 15 — The Sync Engine](./15-sync-engine.md)** — the cursor, push and pull, the
+**Next: [Chapter 7 — The Sync Engine](./08-sync-engine.md)** — the cursor, push and pull, the
 three-way merge that does not lose edits, and the offline-first client queue.

@@ -1,6 +1,6 @@
-# Chapter 4 — The Mascot
+# Chapter 10 — The Mascot
 
-> **Day 4 · Goal: one geometry, four states, every size, zero external assets.**
+> **Day 11 · Goal: one geometry, four states, every size, zero external assets.**
 >
 > The mascot is not decoration. Per §9 it is a **state indicator with four states**, and
 > mascot-driven UI is your distribution strategy — the screenshot a student sends to their
@@ -436,7 +436,7 @@ packages/ui/src/mascot/
 ├── Mascot.tsx           ← the component + the copy table (above)
 ├── ToolbarIcon.tsx      ← the 16px eyes-only variant
 ├── mascot.css           ← the motion spec (above)
-├── mascot-machine.ts    ← the state machine (Chapter 9 uses it)
+├── mascot-machine.ts    ← the state machine (Chapter 15 uses it)
 └── __tests__/
     └── Mascot.test.tsx
 ```
@@ -462,7 +462,7 @@ grep -rE "\.svg|\.png|new Image|url\(" packages/ui/src/mascot/ && echo "✗ exte
 
 ## Step 7 — State machine
 
-The mascot's states must be driven by the product, not guessed. This is the reducer; Chapter 9
+The mascot's states must be driven by the product, not guessed. This is the reducer; Chapter 15
 promotes it into the full XState machine.
 
 ```ts
@@ -529,7 +529,7 @@ page — it works. If they read the mascot instead of the content — it fails."
 ### The playground
 
 ```tsx
-// apps/web/src/App.tsx — throwaway, delete before Chapter 5
+// apps/web/src/App.tsx — throwaway, delete before Chapter 11
 import { useState } from "react"
 import { Mascot, type MascotState } from "@refrain/ui"
 import "@refrain/ui/tokens.css"
@@ -746,7 +746,7 @@ music app.
 
 ---
 
-## Check yourself before Chapter 5
+## Check yourself before Chapter 11
 
 1. **Why is one parameterised geometry better than four SVGs? Give the maintenance reason.**
 2. **Why no mouth in the resting state?**
@@ -759,5 +759,5 @@ music app.
 
 ---
 
-**Next: [Chapter 5 — The Web App Shell](./05-web-app-shell.md)** — routing, layouts, and every
+**Next: [Chapter 11 — The Web App Shell](./11-web-app-shell.md)** — routing, layouts, and every
 screen stubbed with real navigation, before any product logic exists. Front end first.

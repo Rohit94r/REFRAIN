@@ -1,6 +1,6 @@
-# Chapter 6 — The Vault
+# Chapter 12 — The Vault
 
-> **Day 6 · Goal: encrypted, searchable, provenance-carrying profile. Lock and unlock work.**
+> **Day 13 · Goal: encrypted, searchable, provenance-carrying profile. Lock and unlock work.**
 >
 > This is the foundation everything else stands on. If provenance here is sloppy, the review
 > screen lies, and the whole product is worthless.
@@ -67,7 +67,7 @@ internship application asks for `Secondary School %`.
 
 If you model the profile as fixed columns, you will spend the next month adding columns and
 still fail on field 40. Instead model it as a **small set of canonical facts plus freeform
-attributes**, so the mapping layer (Chapter 8) does the translation instead of your schema.
+attributes**, so the mapping layer (Chapter 14) does the translation instead of your schema.
 
 ```ts
 // Fixed: the ~20 things every form eventually asks for
@@ -77,7 +77,7 @@ attributes**, so the mapping layer (Chapter 8) does the translation instead of y
 attributes: { "10th_percentage": { value, provenance }, "class_x_aggregate": { ... } }
 ```
 
-The cost is that you must write the mapping layer. That layer is Chapter 8, and it is the
+The cost is that you must write the mapping layer. That layer is Chapter 14, and it is the
 moat. You cannot avoid it by choosing a nicer schema.
 
 ### The unlock model is a UX decision, not a security one
@@ -328,7 +328,7 @@ export const db = new RefrainDB()
 **Read `this.version(1).stores` carefully.** It is not a schema — it is an *index* declaration.
 IndexedDB stores are dumb key-value stores; Dexie turns these strings into real indexes.
 `provenance.kind` as a compound-ish index lets you answer "show me everything from documents"
-without a full scan, which is what the provenance inspector in Chapter 9 needs.
+without a full scan, which is what the provenance inspector in Chapter 15 needs.
 
 ### IndexedDB is asynchronous and that is not a detail
 
@@ -436,7 +436,7 @@ vault. One extra sealed blob makes unlock total.
 valid. The ambiguity costs one support ticket and buys you not being a padding oracle.
 
 **`lock()` must be called on every `chrome.storage.session` clear and before the extension
-service worker dies.** Add that to Chapter 7.
+service worker dies.** Add that to Chapter 13.
 
 ---
 
@@ -468,7 +468,7 @@ export interface Profile {
     pan?: ProfileFact
     aadhaar?: ProfileFact
   }
-  /** Everything else. Chapter 8 learns to read this. */
+  /** Everything else. Chapter 14 learns to read this. */
   attributes: Record<string, ProfileFact>
   documents: DocumentRecord[]
 }
@@ -511,7 +511,7 @@ export function isSafeToFill(fact: ProfileFact | undefined): fact is ProfileFact
 ```
 
 `readPath` and `indexFacts` are **pure functions with no I/O.** Write their tests first. They
-are the seam where Chapter 8's mapping engine gets tested without a browser, without Dexie,
+are the seam where Chapter 14's mapping engine gets tested without a browser, without Dexie,
 and without a form. That is not a detail — it is why you can test the moat in 40ms.
 
 ---
@@ -560,7 +560,7 @@ export async function readDocument(id: string, key: CryptoKey): Promise<Blob> {
 > **Never `JSON.stringify` a PDF.** `seal` calls `JSON.stringify` internally, which is
 > correct for your profile objects and catastrophic for a 4MB binary blob — it will corrupt
 > it and blow your memory budget twice over. If you ever need to seal raw bytes, add a
-> dedicated `sealBytes` that skips the stringify. Chapter 11 uses it for the extractor.
+> dedicated `sealBytes` that skips the stringify. Chapter 17 uses it for the extractor.
 
 ---
 
@@ -745,7 +745,7 @@ git commit -m "feat(vault): AES-GCM + PBKDF2(600k), sealed session, profile grap
 | `readPath`, `indexFacts`, `isSafeToFill` | **You.** Pure functions are the seam you will test for two weeks |
 | `Unlock.tsx` styling | **OpenCode** — you write the copy, it writes the classNames |
 | `storeDocument` / `readDocument` | **OpenCode** |
-| `sealBytes` for raw binary (needed in Chapter 11) | **OpenCode**, then you review the byte handling |
+| `sealBytes` for raw binary (needed in Chapter 17) | **OpenCode**, then you review the byte handling |
 | A test for a password manager autofilling the passphrase | **OpenCode** — it needs DevTools knowledge you will not have yet |
 
 ---
@@ -793,7 +793,7 @@ real message, not a silent catch.
 
 ---
 
-## Check yourself before Chapter 7
+## Check yourself before Chapter 13
 
 1. **Why does `deriveKey` use `extractable: false`, and what breaks if it is `true`?**
 2. **Why a fresh IV per record, and what happens if you reuse one under GCM?**
@@ -805,6 +805,6 @@ real message, not a silent catch.
 
 ---
 
-**Next: [Chapter 7 — The Content Script](./07-the-content-script.md)** — WXT, the MV3 manifest,
+**Next: [Chapter 13 — The Content Script](./13-the-content-script.md)** — WXT, the MV3 manifest,
 `all_frames`, form schema extraction, hidden-input drivers, and the native setter that stops
 React from silently eating your values.

@@ -1,6 +1,6 @@
-# Chapter 13 — The Data Model
+# Chapter 5 — The Data Model
 
-> **Day 17 · Goal: every Mongoose schema written, indexed, and reasoned about.**
+> **Day 5 · Goal: every Mongoose schema written, indexed, and reasoned about.**
 >
 > Six collections. Five contain no personal content. That ratio is the design, and it is the
 > thing a security reviewer will check first.
@@ -11,7 +11,7 @@
 
 ### Hybrid storage — and why one collection cannot work
 
-Chapter 12's conclusion: **a server that cannot read your data cannot query your data.** You
+Chapter 4's conclusion: **a server that cannot read your data cannot query your data.** You
 cannot index ciphertext. So you split the problem in two.
 
 | Collection | Holds | Server can read it? | Size | Query pattern |
@@ -136,7 +136,7 @@ export async function unwrapDEK(wrapped: { ciphertext: ArrayBuffer; iv: Uint8Arr
 }
 ```
 
-> **`exportKey("raw", dek)` requires `extractable: true`, which contradicts Chapter 6's rule.**
+> **`exportKey("raw", dek)` requires `extractable: true`, which contradicts Chapter 12's rule.**
 > That is not a contradiction — it is the one legitimate exception, and it exists precisely so
 > the DEK can be *wrapped*. Two different jobs, two different extractability. `k_root` and
 > `k_vault` stay `false`; only the per-document DEK is `true`. If you ever find yourself setting
@@ -316,7 +316,7 @@ running. A cron job is another moving part that can fail silently and leave tomb
 90 days is a deliberate choice. It must exceed your longest plausible offline window — a phone
 in a drawer for a semester, a laptop that was never powered on — or a very old client will
 resurrect the document. **When you change the tombstone window, bump a `syncVersion` so old
-clients know to do a full re-pull.** Chapter 15.
+clients know to do a full re-pull.** Chapter 8.
 
 ### Why `syncmeta` must never grow a content field
 
@@ -352,7 +352,7 @@ deviceSchema.index({ userId: 1, fingerprint: 1 }, { unique: true, partialFilterE
 > **Devices are what make "revoke this laptop" a real feature** rather than a suggestion.
 > Without a device record, revoking a lost device means rotating the whole account and logging
 > you out everywhere — including the phone you still have. With it, you revoke one row and every
-> refresh token bound to it dies. Chapter 14.
+> refresh token bound to it dies. Chapter 6.
 
 **`label` is free-text from the user, which makes it log-worthy.** A user will name a device
 "work laptop (boss can see)" and it will sit in your logs in plaintext. Your scrubber handles
@@ -373,7 +373,7 @@ const refreshTokenSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
   expiresAt: { type: Date, required: true },
   revokedAt: { type: Date, default: null },
-  /** Set on reuse. See the rotation-reuse detection in Chapter 14. */
+  /** Set on reuse. See the rotation-reuse detection in Chapter 6. */
   rotatedTo: { type: Schema.Types.ObjectId, ref: "RefreshToken", default: null },
 }, { strict: true })
 
@@ -391,7 +391,7 @@ collection. This is the single most important line in the auth model.
 **A TTL index on `expiresAt`.** MongoDB removes expired tokens. No cleanup job.
 
 **`rotatedTo`.** This field is what makes reuse detection possible: if a token that was already
-rotated is presented again, the token was stolen. Chapter 14 uses it to revoke the whole family.
+rotated is presented again, the token was stolen. Chapter 6 uses it to revoke the whole family.
 Without it you have no theft signal.
 
 **`expiresAt` defaults to 30 days; access tokens to 15 minutes.** The ratio matters. Short access
@@ -609,7 +609,7 @@ in `NODE_ENV=test` only. Never lower it in production.
 
 ---
 
-## Check yourself before Chapter 14
+## Check yourself before Chapter 6
 
 1. **Why are `blobs` and `syncmeta` separate collections rather than one?**
 2. **What does the server hold that lets it authenticate you without decrypting you?**
@@ -623,6 +623,6 @@ in `NODE_ENV=test` only. Never lower it in production.
 
 ---
 
-**Next: [Chapter 14 — Auth](./14-auth.md)** — registration with the HKDF split, Argon2id,
+**Next: [Chapter 6 — Auth](./06-auth.md)** — registration with the HKDF split, Argon2id,
 short-lived JWTs, refresh rotation with reuse detection, and revoking one device without
 logging out the rest.

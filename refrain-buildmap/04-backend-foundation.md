@@ -1,4 +1,4 @@
-# Chapter 12 — Backend Foundation
+# Chapter 4 — Backend Foundation
 
 > **Day 16 · Phase 2 begins · Goal: an API running locally against MongoDB, with §11 rewritten
 > to tell the truth.**
@@ -17,7 +17,7 @@ forms, with an encrypted vault, document extraction, and a tracker — and **no 
 
 That matters for two reasons:
 
-**One: nothing in Phase 2 is required to ship.** Chapter 19 submits v1.0 without any of it. The
+**One: nothing in Phase 2 is required to ship.** Chapter 20 submits v1.0 without any of it. The
 backend is a bet that demand for cross-device sync exists, and it is deliberately built *after*
 the thing people might want sync for. If you never get users, the backend cost you nine days
 and taught you something you will use again.
@@ -25,7 +25,7 @@ and taught you something you will use again.
 **Two: the frontend is now a constraint, not a starting point.** Everything in Chapters 12–18
 has to fit under what Chapters 1–11 already committed to. `packages/fields` is published across
 a boundary you cannot recall. The vault's key hierarchy was designed before `k_auth` existed —
-Chapter 14 has to fit inside it, not redesign it. **Read Chapters 6 and 13's diagrams before you
+Chapter 6 has to fit inside it, not redesign it. **Read Chapters 6 and 13's diagrams before you
 touch this code.** The cryptography is already decided; you are building the server around it,
 not the other way around.
 
@@ -77,11 +77,11 @@ It does not, and the reason is one package:
 `apps/api` imports **the same Zod schemas the extension builds its payloads from.** A shape
 change fails CI once, in one place, because there is only one shape to change. Move the server
 to Python and you own two definitions of the sync protocol with nothing comparing them — and
-Chapter 15's three-way merge is exactly the code that fails *silently* when the two disagree.
+Chapter 8's three-way merge is exactly the code that fails *silently* when the two disagree.
 
 > **Python's best argument here is the one that does not apply.** It has the best ML ecosystem,
-> and the strongest OCR story. But your inference is on-device (Chapter 8) and your OCR is
-> in-browser (Chapter 11) — because the marksheet must never be uploaded. **Both of Python's
+> and the strongest OCR story. But your inference is on-device (Chapter 14) and your OCR is
+> in-browser (Chapter 17) — because the marksheet must never be uploaded. **Both of Python's
 > best features require the server to see data it is forbidden to see.** Choosing it for those
 > would be choosing a language for capabilities you have deliberately ruled out.
 >
@@ -131,7 +131,7 @@ That is not a small cost. It is the real cost of end-to-end encryption, and pret
 otherwise is how you end up with a backend that quietly logs plaintext because "we needed to
 search it."
 
-**Which is why the schema in Chapter 13 is hybrid** — opaque blobs for content, plus a strictly
+**Which is why the schema in Chapter 5 is hybrid** — opaque blobs for content, plus a strictly
 minimal metadata index so sync can work. And it is why search happens in your browser, not on
 your server.
 
@@ -199,11 +199,11 @@ apps/api/src/
 ├── app.ts             ← the Hono app. Routers mounted here.
 ├── db/
 │   ├── connect.ts     ← MongoClient, pooling, lifecycle
-│   ├── models/        ← Mongoose schemas (Chapter 13)
+│   ├── models/        ← Mongoose schemas (Chapter 5)
 │   └── seed.ts
 ├── middleware/
 │   ├── logger.ts      ← pino, with PII scrubbing
-│   ├── auth.ts        ← Chapter 14
+│   ├── auth.ts        ← Chapter 6
 │   ├── rateLimit.ts
 │   └── errors.ts
 ├── routes/
@@ -589,7 +589,7 @@ curl localhost:8787/health
 | `AppError` and the error middleware | **OpenCode** |
 
 > **Redis is not installed yet.** For local dev, an in-memory limiter is fine and one fewer
-> dependency is one fewer thing to run. Add Redis in Chapter 17 when you deploy, where
+> dependency is one fewer thing to run. Add Redis in Chapter 18 when you deploy, where
 > multi-instance rate limiting actually requires it.
 
 ---
@@ -612,9 +612,9 @@ resolved. Await the connection in `app.ts` before mounting routes, or your first
 later hits a model with no connection.
 
 **User data appears in your logs.** Your scrubber only covers the top level. Log the count, not
-the keys. Chapter 15's `logSync` shows the correct shape.
+the keys. Chapter 8's `logSync` shows the correct shape.
 
-**One deploy killed a sync mid-write.** No `SIGTERM` handler. Chapter 17 sets the grace period
+**One deploy killed a sync mid-write.** No `SIGTERM` handler. Chapter 18 sets the grace period
 on the platform too.
 
 **CI wiped your local database.** Shared database across branches. Use
@@ -628,7 +628,7 @@ page manually thirty times. Make the limit environment-dependent.
 
 ---
 
-## Check yourself before Chapter 13
+## Check yourself before Chapter 5
 
 1. **What does a backend actually buy you here, in one sentence?**
 2. **Which three §11 claims become false, and what is the rewrite for each?**
@@ -642,5 +642,5 @@ page manually thirty times. Make the limit environment-dependent.
 
 ---
 
-**Next: [Chapter 13 — The Data Model](./13-data-model.md)** — hybrid storage. Opaque blobs plus
+**Next: [Chapter 5 — The Data Model](./05-data-model.md)** — hybrid storage. Opaque blobs plus
 a minimal non-sensitive metadata index, tombstones, and every Mongoose schema.

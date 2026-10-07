@@ -1,9 +1,9 @@
-# Chapter 5 — The Web App Shell
+# Chapter 11 — The Web App Shell
 
-> **Day 5 · Goal: every screen exists, navigates, and is empty. No product logic yet.**
+> **Day 12 · Goal: every screen exists, navigates, and is empty. No product logic yet.**
 >
 > Front end first. You build the whole skeleton — routing, layout, every page — so that from
-> Chapter 6 onward you are *filling in* a working app rather than *constructing* one. A shell
+> Chapter 12 onward you are *filling in* a working app rather than *constructing* one. A shell
 > that navigates is the cheapest possible feedback loop, and it costs one day.
 
 ---
@@ -47,7 +47,7 @@ Every route here is a **place the user can be deep-linked to, bookmarked, and re
 support message.** When someone emails "I can't see my documents," you send them a link.
 
 That means: no route without a real path, no state that only exists inside a component, and a
-404 that says where the user can go next. You will thank yourself in Chapter 8 when you are
+404 that says where the user can go next. You will thank yourself in Chapter 14 when you are
 debugging a Setlist entry from a URL.
 
 ---
@@ -150,7 +150,7 @@ export function UnlockGate() {
 
 `vault.subscribe()` rather than reading `vault.isUnlocked` during render — the vault is a plain
 class outside React, so you need a bridge. `useSyncExternalStore` is the correct primitive and
-Chapter 6 formalises it. **Do not poll.** Polling `isUnlocked` every 500ms is how you end up
+Chapter 12 formalises it. **Do not poll.** Polling `isUnlocked` every 500ms is how you end up
 with a vault that unlocks visually a second late on every page.
 
 ---
@@ -279,7 +279,7 @@ export function Dashboard() {
 ```tsx
 // apps/web/src/routes/Profile.tsx
 export function Profile() {
-  // Chapter 6 replaces this with the real fact graph.
+  // Chapter 12 replaces this with the real fact graph.
   return (
     <div>
       <h1 className="text-2xl font-semibold text-ink">Your profile</h1>
@@ -517,7 +517,7 @@ Add one row to `refrain.md` §19:
 | `RouteError` / `NotFound` markup | **OpenCode** |
 | Responsive breakpoints and the bottom tab bar | **OpenCode** |
 | `StatCard` component | **OpenCode** |
-| `useSyncExternalStore` bridge for the vault | **OpenCode** — see Chapter 6 for the pattern you want |
+| `useSyncExternalStore` bridge for the vault | **OpenCode** — see Chapter 12 for the pattern you want |
 
 ---
 
@@ -564,7 +564,7 @@ but the SVG is still 48px. Wrap it in a sized div.
 
 ---
 
-## Check yourself before Chapter 6
+## Check yourself before Chapter 12
 
 1. **Why build the shell before the vault?**
 2. **Why is the unlock gate outside `AppShell` rather than inside it?**
@@ -576,5 +576,5 @@ but the SVG is still 48px. Wrap it in a sized div.
 
 ---
 
-**Next: [Chapter 6 — The Vault](./06-the-vault.md)** — AES-GCM, PBKDF2, the sealed session,
+**Next: [Chapter 12 — The Vault](./12-the-vault.md)** — AES-GCM, PBKDF2, the sealed session,
 the profile graph, and `useSyncExternalStore` to bridge the vault into React.

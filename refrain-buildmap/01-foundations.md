@@ -82,7 +82,7 @@ and fast. **Ship the production build, not the dev server.**
 
 ## Step 1 — Verify your toolchain
 
-Do not skip this. Every "it doesn't work" bug in Chapter 7 is a version problem found here.
+Do not skip this. Every "it doesn't work" bug in Chapter 13 is a version problem found here.
 
 ```bash
 node -v      # need 20+ (Node 22 or 26 is ideal)
@@ -128,10 +128,10 @@ corepack enable && corepack prepare pnpm@latest --activate
 Google Chrome 154.0.8037.98
 ```
 
-**You are on 138+, so you have the `LanguageModel` API.** That is the good path: Chapter 8's
+**You are on 138+, so you have the `LanguageModel` API.** That is the good path: Chapter 14's
 inference engine runs locally in Chrome, and you never touch a cloud model.
 
-If you are below 138, that is not a blocker — Chapter 8 has an Ollama fallback that works
+If you are below 138, that is not a blocker — Chapter 14 has an Ollama fallback that works
 today. But know which engine you have before you start, because it changes what you test.
 
 > **`--version` on a browser binary is safe.** It prints the version and exits without opening
@@ -149,7 +149,7 @@ Do not assume it from the version number. Check:
 ```js
 // Paste into DevTools console on any https page
 typeof LanguageModel !== "undefined"
-// → true means Chapter 8 can use the built-in model
+// → true means Chapter 14 can use the built-in model
 ```
 
 **If that is `false`, you need the Ollama fallback.** Note it and move on — do not spend
@@ -165,7 +165,7 @@ You want a clean, disposable profile for development.
 
 > **Why this is not superstition.** A profile with 30 extensions injects 30 content scripts
 > into every page. When your scanner reports 14 fields on Day 8, you will spend two hours
-> debugging another extension's DOM mutations. Chapter 18's "does the page feel slower"
+> debugging another extension's DOM mutations. Chapter 19's "does the page feel slower"
 > measurement is also impossible on a personal profile — the delta is noise.
 >
 > **Guest mode is not enough**, because it disables your extensions, including the one you are
@@ -219,7 +219,7 @@ Hello, Refrain
 ```
 
 > **Why local and not `npm i -g tsx`.** A global `tsx` is a version you do not control, on a
-> machine you will forget about. Chapter 17's CI installs with `--frozen-lockfile`, which
+> machine you will forget about. Chapter 18's CI installs with `--frozen-lockfile`, which
 > means a globally-installed tool is invisible to CI and invisible to `pnpm exec`. **Anything
 > in your `scripts` block must be a local dependency**, or it works for you and nowhere else.
 
@@ -248,7 +248,7 @@ function wants a `number`.* Column 19 is the `"Refrain"` argument.
 
 > **A JavaScript version of this program would not error** — it would happily print
 > `Hello, Refrain` anyway, and you would ship it. In production that class of bug is
-> `undefined` in a form field, which is the single most common cause of the Chapter 7
+> `undefined` in a form field, which is the single most common cause of the Chapter 13
 > "filled but nothing arrived" bug. **This is not academic.** It is the exact failure your
 > product must not have.
 
@@ -374,7 +374,7 @@ typecheck that is supposed to be clean, read it — do not scroll past it.
 > That error means **your `src/` directory is empty or missing**, not that your code is fine.
 
 > **Version warning.** Older tutorials show `"jsx": "react-jsx"` in the root config. From
-> Chapter 3 onward this file gets split into shared presets in `packages/tsconfig/`. Do not
+> Chapter 9 onward this file gets split into shared presets in `packages/tsconfig/`. Do not
 > build this file out by hand again after Chapter 2 — you will replace it with a preset.
 
 ---
@@ -451,9 +451,9 @@ monorepo.
 | - | ------------------------------------------------------- | --- | --- |
 | 1 | `node -v`, `pnpm -v`, `git --version`                   | **You** | Three commands. Delegating this is delegating "is my machine set up" |
 | 2 | `corepack enable` if pnpm is missing                    | **You** | It edits your shell config — a machine change, not a code change |
-| 3 | Chrome `--version`, then read it against the 114/138 table | **You** | This decision determines Chapter 8's inference engine |
+| 3 | Chrome `--version`, then read it against the 114/138 table | **You** | This decision determines Chapter 14's inference engine |
 | 4 | `typeof LanguageModel` in DevTools                      | **You** | One line. The answer changes what you build later |
-| 5 | Create the `refrain-dev` Chrome profile                 | **You** | A browser setting. Chapter 18's perf measurement depends on it |
+| 5 | Create the `refrain-dev` Chrome profile                 | **You** | A browser setting. Chapter 19's perf measurement depends on it |
 | 6 | `mkdir -p ~/refrain-lab/src`, `git init`                | **You** | Includes the `src/` — the detail that silently breaks your typechecker |
 | 7 | Write `src/hello.ts`                                    | **You** | 4 lines, and the whole point is the types, not the code |
 | 8 | `pnpm add -D tsx`, then `pnpm exec tsx src/hello.ts`    | **You** | Local install, not global — you are learning why |
@@ -471,7 +471,7 @@ monorepo.
 >
 > **The reason is worth naming: every option in `tsconfig.json` is a rule about your own
 > future code.** If you paste that file without reading it, you have installed twelve rules you
-> cannot evaluate when one of them blocks you in Chapter 9 — and your instinct will be to turn
+> cannot evaluate when one of them blocks you in Chapter 15 — and your instinct will be to turn
 > `strict` off rather than fix the code. Reading it once here is what prevents that.
 
 ### What OpenCode *is* allowed to do in this chapter

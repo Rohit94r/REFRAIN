@@ -1,9 +1,9 @@
-# Chapter 7 — The Content Script
+# Chapter 13 — The Content Script
 
-> **Days 7–8 · Goal: the extension reports "I found 14 fields" on a real Google Form.**
+> **Day 14 · Goal: the extension reports "I found 14 fields" on a real Google Form.**
 >
 > This is your **first demo checkpoint.** Stop here on Day 9, record 40 seconds, send it to
-> one person. Do not proceed to Chapter 8 until this works.
+> one person. Do not proceed to Chapter 14 until this works.
 
 ---
 
@@ -25,7 +25,7 @@ they redesigned. If your fragile code is one dumb file with no imports, breakage
 diff. If the logic is spread across six modules with a React tree in the middle, it is a
 rewrite.
 
-Resist every urge to "just add a little logic here." Chapter 8 is where logic goes.
+Resist every urge to "just add a little logic here." Chapter 14 is where logic goes.
 
 ### There are exactly four ways to read another site's DOM
 
@@ -176,7 +176,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 ```
 
 > Note there is no `<App />` written yet. For the Day 8 checkpoint, write a throwaway one
-> that just prints a number. Chapter 9 replaces it with the real screen.
+> that just prints a number. Chapter 15 replaces it with the real screen.
 
 ---
 
@@ -780,7 +780,7 @@ git commit -m "feat(extension): content script reader/writer, all_frames, native
 
 > **Do that Playwright script.** It is the highest-leverage 40% in this chapter. Twenty saved
 > public forms, dumped as JSON, becomes your regression suite for the label resolver — and
-> in Chapter 8 it becomes the hand-labelled dataset that *is* your moat.
+> in Chapter 14 it becomes the hand-labelled dataset that *is* your moat.
 
 ---
 
@@ -836,7 +836,7 @@ permissions justification in the README.** Write it well; it converts.
 
 ---
 
-## Check yourself before Chapter 8
+## Check yourself before Chapter 14
 
 1. **Why does `el.value = x` fail on a React input, and what does the prototype setter do that `.value` does not?**
 2. **What does `composed: true` do, and which bug does it prevent?**
@@ -848,6 +848,6 @@ permissions justification in the README.** Write it well; it converts.
 
 ---
 
-**Next: [Chapter 8 — The Mapping Engine](./08-the-mapping-engine.md)** — rule-based mapping
+**Next: [Chapter 14 — The Mapping Engine](./14-the-mapping-engine.md)** — rule-based mapping
 first, semantic matching second, normalisation, confidence scoring, and local inference via the
 Chrome Prompt API with an Ollama fallback.

@@ -1,6 +1,6 @@
-# Chapter 19 — Ship Checklist
+# Chapter 20 — Ship Checklist
 
-> **Day 23 · Goal: the extension is submitted, the privacy policy is verifiable, and you know
+> **Day 21 · Goal: the extension is submitted, the privacy policy is verifiable, and you know
 > exactly what you did not build.**
 >
 > The final gate. Everything before this chapter made the product work. This one makes it
@@ -171,7 +171,7 @@ not.
 **It says what our logs exclude.** Nobody asks about logs. The fact that you addressed it
 unprompted is the signal.
 
-**It is honest about the sync exception.** §11 originally said "no server." Chapter 12 rewrote
+**It is honest about the sync exception.** §11 originally said "no server." Chapter 4 rewrote
 that. **A privacy policy that is now accurate is worth more than one that was impressive and
 wrong**, because the wrong one ends with someone who checked.
 
@@ -308,7 +308,7 @@ end-to-end encrypted.
 > misrepresentation, it is discoverable, and it ends a Chrome publisher account permanently.
 >
 > The pragmatic sequencing: **submit Phase 1 with no sync** (which is a complete product), then
-> add sync and update the disclosure in a later version. Chapter 12 made sync optional for
+> add sync and update the disclosure in a later version. Chapter 4 made sync optional for
 > exactly this reason.
 
 ### Common rejection reasons
@@ -413,7 +413,7 @@ reviewers both read this section.
 **A `Status` line that says Phase 1.** Honesty about maturity prevents the wrong expectations.
 
 **A named contribution target.** `aliases.json` is the moat and it is 100% hand-labelled work
-(Chapter 8). Saying so converts a contributor into a labelling partner, which is the only kind
+(Chapter 14). Saying so converts a contributor into a labelling partner, which is the only kind
 of contribution that scales.
 
 ---
@@ -440,7 +440,7 @@ of contribution that scales.
 
 ### The three bugs, explicitly
 
-The bugs from Chapter 7 produce identical symptoms and different causes. **Test all three
+The bugs from Chapter 13 produce identical symptoms and different causes. **Test all three
 separately or you will think you passed.**
 
 - [ ] **Bug 1** — React-controlled input: value is visible AND the form receives it
@@ -521,7 +521,7 @@ const stats = {
 > other metric is a proxy. A 4% correction rate means Refrain's mapping is right 96% of the
 > time; a 30% rate means the alias dataset needs work and no amount of UI polish will fix it.
 >
-> **And it must be shown to the user.** Chapter 10 puts "2 corrected" quietly in the Setlist row.
+> **And it must be shown to the user.** Chapter 16 puts "2 corrected" quietly in the Setlist row.
 > That is not a metric display — it is an integrity signal, and a user who sees that number
 > trusts you more precisely *because* it admits you are imperfect.
 
@@ -572,7 +572,7 @@ sync, not with Verses, not with accounts.
 ```bash
 # Defer to v1.1:
 #   - Optional sync (Chapters 12-16)
-#   - Verses with live compression preview (Chapter 10)
+#   - Verses with live compression preview (Chapter 16)
 #   - Ollama fallback
 ```
 
@@ -649,7 +649,7 @@ Day 6-7   Ship v1.0.1.
 
 ```ts
 // 1. A portal redesign. Your labels still match; the ids changed.
-//    → Encore's label fallback (Ch.10) saves you. Add the aliases.
+//    → Encore's label fallback (Ch.16) saves you. Add the aliases.
 // 2. A form framework doing something you have never seen.
 //    → findHiddenDriver misses a new widget pattern. Teach it.
 // 3. A user who genuinely needs auto-submit.
@@ -716,9 +716,9 @@ Add one row to `refrain.md` §19:
 
 ## Gotchas in this chapter
 
-**Rejected: "remote code execution."** Tesseract's WASM fetched from a CDN. Chapter 18 A2. MV3 forbids it.
+**Rejected: "remote code execution."** Tesseract's WASM fetched from a CDN. Chapter 19 A2. MV3 forbids it.
 
-**Rejected: "permissions not justified."** `<all_urls>` in the shipped manifest. Chapter 18 C2.
+**Rejected: "permissions not justified."** `<all_urls>` in the shipped manifest. Chapter 19 C2.
 
 **Rejected: "privacy disclosure mismatch."** You ship sync and checked "no data." Declare it.
 
@@ -739,12 +739,12 @@ built path, or `host_permissions` does not cover the site.
 **The Chrome Web Store listing says "sync is available" and it is not.** Do not describe
 features you did not ship.
 
-**You shipped with a `.env` committed.** `git ls-files | grep env`. Chapter 17.
+**You shipped with a `.env` committed.** `git ls-files | grep env`. Chapter 18.
 
 **`correctionRate` is 30% and you shipped anyway.** The mapping is wrong and no UI will fix it.
 Go work on aliases.
 
-**A user asked for auto-submit and you said yes.** That is the line. Chapter 19 Step 6.
+**A user asked for auto-submit and you said yes.** That is the line. Chapter 20 Step 6.
 
 **You are reading day-one feedback as feature requests.** It is mostly setup confusion. Wait 48
 hours.

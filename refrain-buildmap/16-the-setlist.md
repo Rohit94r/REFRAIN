@@ -1,6 +1,6 @@
-# Chapter 10 — The Setlist & Verses
+# Chapter 16 — The Setlist & Verses
 
-> **Day 14 · Goal: the tracker persists, Encore re-fills a stale form, and Verses adapt to length.**
+> **Day 17 · Goal: the tracker persists, Encore re-fills a stale form, and Verses adapt to length.**
 >
 > Two features that look like CRUD and are not. The Setlist is why you get a second session;
 > Verses are the one thing no competitor in §12's table has at all.
@@ -482,7 +482,7 @@ a bug, and a bug on a motivation letter costs the application.
 beats density.
 
 **No model in the default path.** This is a compression problem, and a wrong compression is
-worse than a visible truncation. If a user wants AI adaptation, Chapter 8's local model path is
+worse than a visible truncation. If a user wants AI adaptation, Chapter 14's local model path is
 available — opt-in, off by default.
 
 **`…` marks a truncation.** The user must be able to tell that Refrain shortened something. A
@@ -530,7 +530,7 @@ export function Verses() {
 
 ### The mapping engine's verse layer
 
-Add this to Chapter 8's pipeline as **layer 3.5**, between attributes and inference:
+Add this to Chapter 14's pipeline as **layer 3.5**, between attributes and inference:
 
 ```ts
 // Layer 3.5 — a Verse for this kind of field, adapted to the box.
@@ -556,7 +556,7 @@ function layerVerses(label: string, profile: Profile, field: FormFieldSchema) {
 }
 ```
 
-**Extract `maxLength` in Chapter 7's content script.** You are already reading the field; add
+**Extract `maxLength` in Chapter 13's content script.** You are already reading the field; add
 `maxLength: el.maxLength > 0 ? el.maxLength : undefined` to `FormFieldSchema`. Without it the
 adaptation has no budget and the whole feature degrades to "paste the whole thing."
 
@@ -647,7 +647,7 @@ need one — retrofitting a format version is painful.
 
 ---
 
-## Check yourself before Chapter 11
+## Check yourself before Chapter 17
 
 1. **Why is the Setlist a retention mechanism rather than a history log?**
 2. **Why does Refrain not observe submission, and what is the alternative?**
@@ -660,6 +660,6 @@ need one — retrofitting a format version is painful.
 
 ---
 
-**Next: [Chapter 11 — Document Extraction](./11-document-extraction.md)** — pdf.js text-layer
+**Next: [Chapter 17 — Document Extraction](./17-document-extraction.md)** — pdf.js text-layer
 reconstruction, the scan detection that routes to Tesseract, the OCR confidence rule that keeps
 photographed marksheets safe, and provenance you can verify in two seconds.

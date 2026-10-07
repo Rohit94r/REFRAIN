@@ -1,6 +1,6 @@
-# Chapter 15 — The Sync Engine
+# Chapter 8 — The Sync Engine
 
-> **Day 19 · Goal: two devices converge, offline edits survive, and no edit is ever
+> **Day 8 · Goal: two devices converge, offline edits survive, and no edit is ever
 > silently lost.**
 >
 > The server cannot merge your data, because it cannot read your data. **Every line of conflict
@@ -110,7 +110,7 @@ CHANGE POST /sync/change-passphrase  → re-wrapped DEKs
 ```
 
 **`pull` returns metadata only, never ciphertext.** Metadata is small, hot, and content-free —
-Chapter 13's `syncmeta` design paying off exactly as intended. The client then asks for the
+Chapter 5's `syncmeta` design paying off exactly as intended. The client then asks for the
 specific blobs it does not have. A device with nothing new does a `pull` of a few hundred bytes
 and stops.
 
@@ -652,7 +652,7 @@ describe("two-device convergence", () => {
 > three-way merge beats LWW, expressed as a test you can read in ten seconds.
 
 > **The delete test is the second-most-common failure.** Deletion propagating without tombstones
-> is exactly the resurrect bug from Chapter 13. If this test fails, check `deleted: true` is in
+> is exactly the resurrect bug from Chapter 5. If this test fails, check `deleted: true` is in
 > `syncmeta` and the client honours it.
 
 ---
@@ -737,7 +737,7 @@ Add two rows to `refrain.md` §19:
 always. If you did read-then-write, this is your bug and it will never reproduce on demand.
 
 **Every pull downloads everything.** You returned ciphertext from `pull` instead of metadata.
-The `blobs`/`syncmeta` split from Chapter 13 exists precisely so this does not happen.
+The `blobs`/`syncmeta` split from Chapter 5 exists precisely so this does not happen.
 
 **Conflicts appear on every sync, about your own writes.** You did not bump `localRev` after a
 successful push, so every write comes back as a conflict against itself.
@@ -780,7 +780,7 @@ from a cleared in-memory store.
 
 ---
 
-## Check yourself before Chapter 16
+## Check yourself before Chapter 9
 
 1. **Why does making each fact its own document remove 90% of conflicts?**
 2. **What breaks if the revision counter is read-then-write instead of atomic `$inc`?**
@@ -795,5 +795,5 @@ from a cleared in-memory store.
 
 ---
 
-**Next: [Chapter 16 — The API Reference](./16-api-reference.md)** — every endpoint, every
+**Next: [Chapter 9 — The API Reference](./07-api-reference.md)** — every endpoint, every
 request and response shape, every status code, and the error catalogue. The lookup document.

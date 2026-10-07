@@ -1,6 +1,6 @@
-# Chapter 9 — Fermata
+# Chapter 15 — Fermata
 
-> **Days 11–13 · Goal: one Google Form filled end-to-end. This is the MVP.**
+> **Day 16 · Goal: one Google Form filled end-to-end. This is the MVP.**
 >
 > A fermata is a held note — the performer waits for the conductor. This screen is your §11
 > human gate made visible. **It is the product.** Spend your best hours here.
@@ -78,7 +78,7 @@ So the row has five parts, and all five are load-bearing:
 
 ### The four row states are a colour AND a shape AND a word
 
-Never colour alone — §9, and the accessibility argument from Chapter 3.
+Never colour alone — §9, and the accessibility argument from Chapter 9.
 
 | Status | Value shown | Shape | Colour | The word |
 |---|---|---|---|---|
@@ -94,7 +94,7 @@ has no word, it does not exist.**
 
 ## Step 1 — The state machine
 
-Your Chapter 3 sketch becomes a real machine now, because the states have guards.
+Your Chapter 9 sketch becomes a real machine now, because the states have guards.
 
 ```bash
 pnpm add xstate zustand
@@ -175,7 +175,7 @@ export const reviewMachine = setup({
           actions: assign(({ event, context }) => ({
             edits: { ...context.edits, [event.id]: event.value },
             // An edit is authoritative. Flip editedByUser so the chip says so
-            // and the correction metric in Chapter 10 can actually be measured.
+            // and the correction metric in Chapter 16 can actually be measured.
             results: context.results.map((r) =>
               r.schema.id === event.id && r.value
                 ? { ...r, value: { ...r.value, value: event.value, editedByUser: true } }
@@ -459,7 +459,7 @@ export function ReviewRow({ result, onEdit }: Props) {
 value out of fourteen should not have to click an edit icon, wait for a modal, and dismiss it.
 
 **`<datalist>` instead of a combobox library.** Free, keyboard-accessible, zero dependencies,
-and it suggests without hiding options. You avoided `select`/`combobox` in Chapter 3 for
+and it suggests without hiding options. You avoided `select`/`combobox` in Chapter 9 for
 exactly this reason — you did not know you needed one yet.
 
 **The provenance is in an `sr-only` span, not only a chip.** A screen reader user must hear
@@ -706,7 +706,7 @@ grep -rniE "\.click\(\)|submit\(\)|requestSubmit|form\.submit|Enter|dispatchEven
   apps/extension packages/vault packages/mapping
 
 # Every hit must be one of:
-#   - a widget that only responds to .click() (Chapter 7, documented)
+#   - a widget that only responds to .click() (Chapter 13, documented)
 #   - the word "Enter" in copy or an onKeyDown handler
 # Anything that clicks a button whose text contains "submit" is a bug.
 ```
@@ -831,7 +831,7 @@ first one.
 
 ---
 
-## Check yourself before Chapter 10
+## Check yourself before Chapter 16
 
 1. **Why does the review happen before the write, and not after?**
 2. **Why is `filled` a `final` state instead of a state with a `SUBMIT` transition?**
@@ -843,6 +843,6 @@ first one.
 
 ---
 
-**Next: [Chapter 10 — The Setlist & Verses](./10-the-setlist.md)** — the tracker that gives users a
+**Next: [Chapter 16 — The Setlist & Verses](./16-the-setlist.md)** — the tracker that gives users a
 reason to come back, Encore for re-filling a stale form, Verses for compressing an essay to a
 character limit, and export/delete.

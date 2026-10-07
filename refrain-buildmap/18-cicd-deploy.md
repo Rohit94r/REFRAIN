@@ -1,6 +1,6 @@
-# Chapter 17 — CI/CD & Deployment
+# Chapter 18 — CI/CD & Deployment
 
-> **Day 21 · Goal: one command ships all three surfaces, and you know how to undo it.**
+> **Day 19 · Goal: one command ships all three surfaces, and you know how to undo it.**
 >
 > Three targets, three update cadences, and one shared dependency graph. Getting this wrong is
 > how a user ends up on a two-week-old extension talking to a web app you deployed an hour ago.
@@ -80,7 +80,7 @@ The rules that follow, and they are strict:
 
 **Practical consequence: schema changes need a version field and a deprecation window.** Add
 `schemaVersion: 1` to every cross-boundary message, and only remove fields two minor versions
-later. Chapter 15's `SYNC_VERSION` is the same idea applied to sync.
+later. Chapter 8's `SYNC_VERSION` is the same idea applied to sync.
 
 ### Web Store review is a queue, not a step
 
@@ -203,7 +203,7 @@ jobs:
 
 ### The privacy gate script
 
-These are Chapter 11's greps, promoted from "remember to run" to "cannot merge without."
+These are Chapter 17's greps, promoted from "remember to run" to "cannot merge without."
 
 ```bash
 #!/usr/bin/env bash
@@ -258,7 +258,7 @@ exit $fail
 > privacy gates. The gate checks **shipped source**, not test files, and says so in the pattern.
 >
 > **The `sentry` grep is scoped to `packages/` and `apps/` and excludes tests** — because
-> Chapter 12 allows Sentry on the server and forbids it in the extension. A grep that cannot
+> Chapter 4 allows Sentry on the server and forbids it in the extension. A grep that cannot
 > distinguish those two is a grep you will disable within a month. Add a second, narrower gate:
 >
 > ```bash
@@ -372,7 +372,7 @@ environments:
 ```
 
 > **`JWT_PUBLIC_KEY` in a Chrome extension bundle will trip every secret scanner.** It is not a
-> secret; it is a *public* key that must be verifiable offline (Chapter 14). Add a scanner
+> secret; it is a *public* key that must be verifiable offline (Chapter 6). Add a scanner
 > allowlist entry with a comment explaining why, or you will "fix" it by removing the key and
 > break offline verification during a scanner-driven cleanup.
 
@@ -637,7 +637,7 @@ npx wrangler pages deploy apps/web/dist \
 
 > **The `_redirects` rule is the single most common static-host bug**, and it only shows up on a
 > hard refresh of a nested route. A user bookmarks `/profile`, opens it next week, gets a 404,
-> and concludes your app is broken. Chapter 5's gotcha list already flagged this; this is where
+> and concludes your app is broken. Chapter 11's gotcha list already flagged this; this is where
 > it gets fixed.
 
 ### Extension
@@ -763,7 +763,7 @@ fly deploy --image registry.fly.io/refrain-api:$(curl -s https://api.fly.io/v1/a
 > Note what it can and cannot restore: **it restores the database, which is opaque ciphertext.**
 > If a bug corrupted a *document* rather than the database, PITR cannot help — the ciphertext
 > was correctly written with a wrong plaintext inside. **Client-side versioning is your only
-> defence there**, which is another argument for Chapter 15's revision model keeping history.
+> defence there**, which is another argument for Chapter 8's revision model keeping history.
 
 ---
 
@@ -814,7 +814,7 @@ const ALERTS = [
 > **Monitor the shape, never the content — including in metrics.** Metric labels are strings in
 > a time-series database with a different access-control story than your app. `docId: "email"` as
 > a label means anyone with dashboard access knows your fact keys. Use the doc *type*, never the
-> doc id. This is the log-scrubbing rule from Chapter 12 applied to a system you did not build.
+> doc id. This is the log-scrubbing rule from Chapter 4 applied to a system you did not build.
 >
 > **The conflict-rate alert is the one that predicts a support ticket.** A rising
 > `sync_conflict` rate means two devices are fighting over the same fact, and before long
@@ -903,7 +903,7 @@ Add two rows to `refrain.md` §19:
 
 **The API works locally and 502s in production.** `CORS_ORIGINS` missing the production domain. It fails at the browser with no server log, because the request never arrives.
 
-**The extension submits and Chrome rejects it: "permission not justified."** You declared `host_permissions: <all_urls>` and the listing does not explain why. Chapter 19's Web Store section.
+**The extension submits and Chrome rejects it: "permission not justified."** You declared `host_permissions: <all_urls>` and the listing does not explain why. Chapter 20's Web Store section.
 
 **A deployment killed a sync mid-write.** No `SIGTERM` grace period on the platform.
 
@@ -944,7 +944,7 @@ Add two rows to `refrain.md` §19:
 
 ---
 
-## Check yourself before Chapter 18
+## Check yourself before Chapter 19
 
 1. **Why can you roll back the web app but not the extension?**
 2. **What rule does "you cannot recall a shipped extension" impose on `packages/fields`?**
@@ -959,6 +959,6 @@ Add two rows to `refrain.md` §19:
 
 ---
 
-**Next: [Chapter 18 — Production Hardening](./18-production-hardening.md)** — the review
+**Next: [Chapter 19 — Production Hardening](./19-production-hardening.md)** — the review
 surface: performance, accessibility, the security headers that matter, load testing, backup and
 disaster recovery, and the honest limits of what a solo project can operate.
