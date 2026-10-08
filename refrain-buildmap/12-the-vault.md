@@ -7,6 +7,31 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Vault** — your encrypted storage on your own device.
+- **Encryption** — turning readable text into unreadable text that only your key
+  can reverse.
+- **AES-GCM** — the encryption used here. It encrypts *and* detects tampering.
+- **Ciphertext** — the unreadable encrypted result.
+- **IV / nonce** — a random number used once with a key. Reusing it breaks
+  AES-GCM completely.
+- **Key** — the secret that makes encryption reversible.
+- **Non-extractable key** — a key the browser will not hand out as raw bytes,
+  so a bug cannot leak it.
+- **PBKDF2** — the slow function that turns your passphrase into a key.
+- **Key hierarchy** — splitting one root key into separate keys for separate
+  jobs.
+- **HKDF** — the function that splits one key into several.
+- **IndexedDB / Dexie** — the browser's built-in database, used to store the
+  vault.
+- **Tamper detection** — knowing when encrypted data has been changed.
+
+---
+
 ## Understand this first
 
 ### Why encryption is not the feature — provenance is

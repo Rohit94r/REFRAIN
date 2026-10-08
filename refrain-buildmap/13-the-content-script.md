@@ -7,6 +7,29 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Extension** — a program Chrome adds to the browser. Only it can read other
+  sites' pages.
+- **Content script** — code that runs *inside* a web page. This is the only code
+  allowed to touch the page.
+- **Extension page** — a page belonging to your extension, like the side panel.
+- **Service worker** — background code. Chrome stops it when it is idle, so do
+  not keep important state in memory.
+- **Manifest** — `manifest.json`, the file that lists your permissions.
+- **Host permission** — permission to run on specific websites.
+- **DOM** — the structure of a web page, which JavaScript can read and change.
+- **Iframe** — a page embedded inside another page. You must handle it
+  separately.
+- **Native setter** — the trick for setting an input's value so React notices.
+- **`allFrames`** — makes a content script run inside iframes too.
+- **Label** — the visible text near an input, like "Full Name".
+
+---
+
 ## Understand this first
 
 ### The content script is the only code allowed to touch the page

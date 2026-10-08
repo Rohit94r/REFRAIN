@@ -8,6 +8,25 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Extraction** — getting facts out of a document you uploaded.
+- **PDF** — a document format that stores text and images.
+- **PDF.js** — the library that reads a PDF in the browser.
+- **OCR** — turning a picture of text into real, selectable text.
+- **Tesseract** — the OCR engine used here. It can run inside the browser.
+- **Scanned PDF** — a PDF that is really just pictures. Needs OCR.
+- **Text layer** — the real text in a normal PDF. No OCR needed.
+- **Confidence** — for OCR, how sure it is of what it read.
+- **Locator** — where a value came from: page number and matched line.
+- **Promotion** — when a value you confirmed becomes fully trusted.
+- **Web Worker** — a background thread, so heavy work does not freeze the page.
+
+---
+
 ## Understand this first
 
 ### Two completely different problems wearing one UI

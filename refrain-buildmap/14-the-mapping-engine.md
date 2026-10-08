@@ -7,6 +7,28 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Mapping** — matching a form's label to the right fact in your profile.
+- **Label** — the visible text next to a form box, like "10th Percentage".
+- **Normalise** — cleaning up text so variations compare equal, such as removing
+  extra spaces.
+- **Alias** — a mapping from one label to a fact. This is the moat.
+- **`aliases.json`** — the file of hand-written label mappings. The most valuable
+  file in the project.
+- **Confidence** — how sure the resolver is, from 0 to 1.
+- **Threshold** — the confidence needed to fill without asking. Ours is 0.75.
+- **NOISE** — words to ignore while matching, like "required" or "optional".
+- **Rule** — a plain-code check that runs before any model is asked.
+- **Inference** — using a local model to guess a label the rules missed.
+- **Ollama** — the local model runner used when Chrome's built-in model is not
+  available.
+
+---
+
 ## Understand this first
 
 ### Rules first, models second, and never the reverse

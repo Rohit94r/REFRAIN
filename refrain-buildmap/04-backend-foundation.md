@@ -38,6 +38,31 @@ not the other way around.
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Backend / server** — the program that answers requests. It runs on a machine
+  that stays on.
+- **API** — the list of addresses your server answers, and what each one does.
+- **Endpoint** — one address, like `POST /sync/push`.
+- **Hono** — a small helper for writing servers. It handles routing, not the
+  server itself.
+- **MongoDB** — a database that stores documents (JSON-like objects) instead of
+  rows and columns.
+- **Mongoose** — the library that lets you describe your MongoDB data as typed
+  objects, so mistakes are caught early.
+- **Environment variable** — a setting read when the program starts, like
+  `MONGODB_URI`. Keeps passwords out of the code.
+- **`.env` file** — a local file holding those settings. Never committed.
+- **Middleware** — a function that runs before your main handler on every request.
+- **Log** — a written record of what happened. Used for debugging.
+- **Graceful shutdown** — handling `SIGTERM` (the polite "please stop" signal)
+  so in-progress work finishes before exiting.
+
+---
+
 ## Understand this first
 
 ### What a backend actually buys you

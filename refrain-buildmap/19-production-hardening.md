@@ -7,6 +7,27 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Performance** — how fast something feels.
+- **Bundle size** — how much JavaScript a user must download.
+- **Budget** — a maximum size you enforce so it cannot grow unnoticed.
+- **Accessibility (a11y)** — making the app usable by everyone, including people
+  with disabilities.
+- **Contrast** — how different two colours are. 4.5:1 for text.
+- **Screen reader** — software that reads a page aloud for a blind user.
+- **Load testing** — sending lots of fake traffic to see where it breaks.
+- **Rate limit** — blocking requests that are too fast or too many.
+- **Backup / PITR** — point-in-time recovery. Rewind the database to any moment
+  in the last week.
+- **CSP** — Content Security Policy. Restricts what scripts a page may run.
+- **Lazy loading** — downloading heavy code only when it is needed.
+
+---
+
 ## Understand this first
 
 ### This chapter is about surfaces you cannot see failing

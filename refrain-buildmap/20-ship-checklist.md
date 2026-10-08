@@ -8,6 +8,25 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Chrome Web Store** — where Chrome extensions are published.
+- **Listing** — the store page: name, description, screenshots.
+- **Privacy disclosure** — what you tell the store about data collection.
+- **Privacy policy** — a public page saying what you do with user data.
+- **Phase 1** — the first usable version. For Refrain: no server needed.
+- **Non-goal** — something you have decided not to build, and why.
+- **Manual smoke test** — testing the real app by hand, not with automated tests.
+- **MIT licence** — permission to use, change, and share the code.
+- **Greppable claim** — a statement in your privacy policy that anyone can check
+  by running one command.
+- **Submission** — sending your extension to the store for review.
+
+---
+
 ## Understand this first
 
 ### You are asking a stranger for a credential

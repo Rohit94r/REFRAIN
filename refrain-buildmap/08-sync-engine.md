@@ -9,6 +9,29 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Sync** — copying changes between devices so both show the same data.
+- **Conflict** — two devices changed the same fact differently while offline.
+- **Three-way merge** — comparing your version, their version, and the common
+  starting point, to work out what to keep.
+- **Base revision** — the last version both devices agreed on.
+- **Revision** — a counter that increases each time something changes.
+- **Cursor** — your record of how far you have synced. Tells the server what you
+  are missing.
+- **Idempotent** — sending the same change twice must not cause a problem.
+- **`opId`** — a unique id for one operation, generated when queued. Lets the
+  server recognise a repeat.
+- **Tombstone** — a "this was deleted" marker, so deletions propagate.
+- **Last-write-wins** — a simple rule where the newest change always wins. Simple,
+  but it silently destroys correct data when clocks disagree.
+- **Offline edit** — a change made with no network, synced later.
+
+---
+
 ## Understand this first
 
 ### Granularity is the conflict-resolution strategy

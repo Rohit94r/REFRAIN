@@ -8,6 +8,28 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Mascot** — the little character that shows what Refrain is doing.
+- **State** — one of four moods: idle, listening, fermata, attacca.
+- **Fermata** — a pause symbol in music. Here it means "waiting for you". It is
+  the human gate.
+- **Geometry** — the actual shape, defined once and reused at every size.
+- **`viewBox`** — the SVG's internal coordinate system. One viewBox, many sizes.
+- **Parameter table** — the table that gives each state its own eyes, colour, and
+  motion. Adding a state means adding a row.
+- **Motion spec** — the timing of each animation: how long, how it eases, and
+  whether it loops.
+- **Greyscale test** — look at the design with all colour removed. If two states
+  become identical, colour was doing the work it should not have.
+- **`aria-hidden`** — tells screen readers to ignore this element.
+- **`prefers-reduced-motion`** — a setting that asks for less animation.
+
+---
+
 ## Understand this first
 
 ### The mascot has a job, and the job is to disappear

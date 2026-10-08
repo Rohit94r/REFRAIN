@@ -8,6 +8,27 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Shell** — the frame around every screen: the sidebar, the header, the padding.
+- **Route** — one page, with its own address. `/settings` is a route.
+- **Router** — the thing that decides which screen to show for the current
+  address.
+- **Deep link** — sending someone a direct URL to a page. It is why every route
+  needs a real address.
+- **Component** — a reusable piece of a screen.
+- **Stub** — a placeholder screen that shows the shape but does nothing yet.
+- **Error boundary** — a wrapper that catches a crash and shows something useful
+  instead of a blank page.
+- **404** — the page shown when the address does not exist.
+- **Responsive** — a layout that adapts to screen size.
+- **Breakpoint** — the width where the layout changes, such as 768px.
+
+---
+
 ## Understand this first
 
 ### Why the shell comes before the vault

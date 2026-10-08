@@ -7,6 +7,27 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Review screen** — where you see every value before it is written.
+- **Provenance** — where a value came from and when.
+- **Provenance chip** — the small label showing a value's source.
+- **State machine** — a way to model screens as states and the events that move
+  between them.
+- **Guard** — a condition that must be true before moving to a state.
+- **XState** — the library that manages state machines.
+- **Human gate** — the rule that a human presses submit, always.
+- **Correction rate** — how often you fix a value after it is filled. The main
+  measure of whether Refrain works.
+- **Inline editing** — changing a value without leaving the screen.
+- **Focus management** — moving keyboard focus when an element is removed, so it
+  does not get lost.
+
+---
+
 ## Understand this first
 
 ### The double gate — and why there are two stops, not one

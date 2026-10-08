@@ -7,6 +7,31 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Monorepo** — one project containing several smaller projects, instead of
+  several separate projects.
+- **Workspace** — one of those smaller projects inside the monorepo.
+- **`packages/`** — folders that hold code other code imports. Not shipped to
+  users. Example: `packages/fields`.
+- **`apps/`** — folders that actually become something a user runs. Example:
+  `apps/web`.
+- **`apps/web`** — the website.
+- **`apps/extension`** — the Chrome extension.
+- **`node_modules`** — installed packages. pnpm creates one in every workspace
+  and links them together.
+- **Turborepo** — runs commands in the correct order across all workspaces, and
+  remembers results so it does not repeat work.
+- **`workspace:*`** — means "use the version from this project, not from the
+  internet."
+- **`turbo.json`** — the file that says which tasks exist and in what order.
+- **A dependency** — something your code needs in order to work.
+
+---
+
 ## Understand this first
 
 ### Why a monorepo and not three repos

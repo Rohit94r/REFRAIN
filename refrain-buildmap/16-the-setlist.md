@@ -7,6 +7,27 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Setlist** — your list of every form you have prepared. Like a set list at a
+  concert.
+- **Encore** — re-filling a form you already prepared, using the values as they
+  were last time.
+- **Verse** — a reusable written answer, such as a motivation essay.
+- **Adapt** — shortening a verse to fit a character limit.
+- **Stale** — a form whose values are old enough that they might be wrong.
+- **Character limit** — the maximum number of characters a form accepts.
+- **Compression** — making text shorter while keeping its meaning.
+- **Live query** — a database query that updates the screen automatically when
+  data changes.
+- **Export** — saving everything as a file on your own machine.
+- **Delete vault** — permanently removing everything.
+
+---
+
 ## Understand this first
 
 ### The Setlist is the retention mechanism, not a history page

@@ -7,6 +7,28 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **CI** — continuous integration. Your code is checked automatically on every
+  push.
+- **CD** — continuous deployment. Passing code is shipped automatically.
+- **GitHub Actions** — the tool that runs those checks.
+- **Workflow** — one automated process, written as a YAML file.
+- **YAML** — the format those config files use. Indentation matters.
+- **Docker** — a way to package your app so it runs the same everywhere.
+- **Container** — the packaged app, including everything it needs.
+- **Deploy** — putting your code where users can reach it.
+- **Rollback** — going back to the previous working version.
+- **Migration** — changing a live database's shape without breaking it.
+- **Secret** — a password or key. Stored in the platform, never in the code.
+- **Extension review** — Chrome checks an extension before publishing. Takes 1 to
+  14 days.
+
+---
+
 ## Understand this first
 
 ### You have three deployables on three clocks

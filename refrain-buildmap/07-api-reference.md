@@ -7,6 +7,29 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **API reference** — a written list of every endpoint, with exact requests and
+  responses.
+- **Contract** — the agreed shape of a request and response. Once published,
+  changing it breaks clients.
+- **Contract test** — a test that checks the real server against the written
+  contract, so they cannot drift apart.
+- **Validation** — checking that incoming data has the right shape before using
+  it.
+- **Idempotent** — doing the same request twice has the same effect as doing it
+  once. `duplicate` push statuses depend on this.
+- **Zod** — the library that checks data shapes, used on both client and server.
+- **Error catalogue** — the full list of error codes your API can return.
+- **Rate limit** — the maximum requests allowed in a time window.
+- **Pagination** — returning results in pages instead of all at once.
+- **Status code** — the number telling what happened: 200, 404, 500.
+
+---
+
 ## Understand this first
 
 ### A reference is not a tutorial

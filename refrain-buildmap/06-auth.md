@@ -7,6 +7,32 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Auth / authentication** — proving who someone is.
+- **Passphrase** — your master secret. Used to derive keys. Never stored, never
+  sent.
+- **KDF (key derivation function)** — turns a short passphrase into a long,
+  strong key. Deliberately slow so guessing is expensive.
+- **PBKDF2** — the KDF your browser can use.
+- **Argon2id** — a stronger, more modern KDF. Used on the server.
+- **HKDF** — splits one key into several, each for a different job.
+- **Access token** — a short-lived ticket (15 minutes). Sent with each request.
+- **Refresh token** — a longer-lived ticket used to get new access tokens.
+- **Token rotation** — every refresh token is single-use and replaced by a new
+  one. If an old one is reused, someone stole it.
+- **JWT** — a signed token that carries claims.
+- **Asymmetric keys** — a public key that anyone can read, and a private key only
+  you hold. Used to sign and verify.
+- **Revocation** — making a token invalid before it expires.
+- **401 vs 403** — 401 means "I do not know who you are"; 403 means "I know, and
+  no".
+
+---
+
 ## Understand this first
 
 ### The server authenticates a key it cannot invert

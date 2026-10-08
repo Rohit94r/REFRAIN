@@ -7,6 +7,28 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Node.js** — lets JavaScript run outside the browser. It is what runs your
+  server. `node file.js` runs a file.
+- **pnpm** — installs packages. Like npm, but it is stricter: a package can only
+  use what it asked for. That strictness keeps your project tidy.
+- **npm** — the older tool. It works, but it is messy with big projects.
+- **TypeScript** — JavaScript with types. A type says what a value is, so the
+  computer can catch mistakes before you run the code.
+- **`package.json`** — the file that lists your project name and the commands you
+  can run. Every project has one.
+- **`tsconfig.json`** — the file that says how TypeScript should behave.
+- **A terminal** — the black window where you type commands.
+- **Git** — saves your work in history, so you can go back to an earlier version.
+- **`node_modules`** — the folder where installed packages live. Never edit it.
+  Never commit it.
+
+---
+
 ## Understand this first
 
 ### What you are actually building

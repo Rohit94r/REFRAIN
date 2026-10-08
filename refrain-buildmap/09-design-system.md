@@ -8,6 +8,30 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Design system** — one agreed set of colours, sizes, and reusable pieces, so
+  every screen looks like the same product.
+- **Design token** — a name for a value, like `--color-brand-500`. Change the
+  token once and everything using it changes.
+- **`@theme`** — the Tailwind v4 block where tokens are declared, which also
+  generates matching utility classes.
+- **Utility class** — a small class like `bg-brand-500` that sets one thing.
+- **Semantic role** — a name like `surface` or `ink` that says *what it is for*,
+  not what colour it is. This is how dark mode works.
+- **`oklch()`** — a way to write colours that humans see consistently. Lightness
+  is 0 (black) to 1 (white).
+- **Contrast ratio** — how different two colours look. 4.5:1 is the minimum for
+  readable text.
+- **WCAG** — the web accessibility guidelines.
+- **`aria-live`** — tells screen readers to announce changes politely.
+- **Component** — a reusable piece of UI, like a Button or a Card.
+
+---
+
 ## Understand this first
 
 ### The mascot has a job, and the job is to disappear

@@ -7,6 +7,29 @@
 
 ---
 
+## Words you need to know
+
+I use these words in this chapter. I explain each one here in simple
+words, so you do not have to guess.
+
+- **Schema** — the shape of your data: which fields exist and what type each is.
+- **Document** — one record in MongoDB. Looks like a JSON object.
+- **Collection** — a group of documents, like a table.
+- **Index** — a helper the database builds so it can find documents fast. Without
+  one, it reads everything.
+- **Unique index** — an index that also refuses duplicates.
+- **Compound index** — an index on more than one field, in a set order.
+- **Compound index order matters** — an index on `(a, b)` helps queries filtering
+  by `a` and by `a` then `b`. It does not help queries filtering only by `b`.
+- **Mongoose** — describes your schema in code and keeps MongoDB matching it.
+- **Tombstone** — a marker saying "this was deleted" instead of removing it.
+  Without one, deleted things come back.
+- **`byteLength`** — the size of stored data in bytes.
+- **Aggregation** — running several database steps one after another, like
+  filter then group then count.
+
+---
+
 ## Understand this first
 
 ### Hybrid storage — and why one collection cannot work
