@@ -12,7 +12,75 @@ for every architectural decision.
 
 ---
 
-## How to use this
+## How to use this — your daily routine
+
+**This is the workflow. Do it the same way every single day.**
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│ 1. READ the whole chapter first                              │
+│    Including "Words you need to know" and "Understand this   │
+│    first". Do not skip to the code.                          │
+│                                                              │
+│ 2. SAY the answers out loud                                 │
+│    The 10 questions at the end. BEFORE looking at them.     │
+│    If you cannot answer, reread that part.                  │
+│                                                              │
+│ 3. BUILD it — "OpenCode, complete chapter N"                 │
+│    Give it the chapter number. It reads the same chapter.    │
+│    It writes the code. You watch what it writes.             │
+│                                                              │
+│ 4. CHECK everything it wrote                                │
+│    Run `pnpm check`. Open the app. Click the buttons.        │
+│    Do not trust it. Verify it.                              │
+│                                                              │
+│ 5. FIX IT YOURSELF by hand                                  │
+│    Anything wrong, unclear, or ugly — you change it          │
+│    yourself. This is the part that teaches you.             │
+│                                                              │
+│ 6. PUSH                                                       │
+│    Commit your changes with a message that explains WHY.     │
+└──────────────────────────────────────────────────────────────┘
+```
+
+### The rule that makes step 5 work
+
+> **If OpenCode wrote a line and you cannot explain it, change it until you
+> can.** You will never be asked about the parts you delegated. You will
+> always be asked about the parts you understood.
+
+Do not feel bad rewriting everything it did. That is the point. Step 5 is the
+only step that makes this a learning project instead of a code-generating
+project.
+
+### A prompt that works
+
+```
+Complete chapter N from refrain-buildmap. Read the chapter first.
+Explain each file you create and what it does. Comment the code so I can
+read it later. Do not add anything the chapter does not ask for.
+After writing, tell me what to run and what output I should see.
+```
+
+That last sentence matters — it makes it tell you how to check its own work.
+
+---
+
+## Chapter structure — what is inside every chapter
+
+| Section | What it is for you |
+|---|---|
+| **Words you need to know** | Jargon explained in plain words before you meet it |
+| **Understand this first** | The idea behind the step. No code. Read this or the code means nothing |
+| **Step 1, 2, 3…** | The actual work, with commands and expected output |
+| **Your 60/40 split** | What you type vs what you delegate |
+| **Gotchas** | What actually breaks, and the fix |
+| **Verify** | Tick list before moving on |
+| **Check yourself** | 10 questions. Answer out loud. This is the real test |
+
+---
+
+## Read this first
 
 **Read the chapter before you build it.** Every chapter opens with "Understand
 this first" — no code in it, explaining the shape of the problem before the

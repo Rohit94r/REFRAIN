@@ -164,12 +164,57 @@ your server.
 
 ## Step 1 — Add the app
 
+### What you are doing and why
+
+You are creating a **third app** in your monorepo. You already have
+`apps/web` and `apps/extension`. This one is the **server** — the program that
+answers requests and talks to the database.
+
+**The file lives at `apps/api/`.** Full path: your project folder → `apps` →
+`api`.
+
+### The plan for today
+
+| Step | What you do | Time |
+|---|---|---|
+| 1 | Create `apps/api` and give it a `package.json` | 15 min |
+| 2 | Write `env.ts` — settings that cannot be wrong | 20 min |
+| 3 | Install and start MongoDB locally | 30 min |
+| 4 | Connect to the database | 25 min |
+| 5 | Write a logger that cannot leak user data | 30 min |
+| 6 | Errors that do not show internals | 20 min |
+| 7 | Rate limiting | 25 min |
+| 8 | Test it all | 20 min |
+
+**Total: about 3 hours.** Step 3 is the slowest — downloading a database.
+
+### 1.1 Create the folder
+
+Go to your project root first (the folder that has `apps/` and `packages/` in
+it):
+
 ```bash
-mkdir -p apps/api/src && cd apps/api && pnpm init
+cd ~/projects/reprise/refrain      # ← your project root. Change if different.
+mkdir -p apps/api/src
 ```
+
+**Check you are in the right place before going further:**
+
+```bash
+pwd
+ls
+```
+
+You should see `apps`, `packages`, `package.json`, and so on. If you see
+`node_modules` only, you are in the wrong folder — go up one level.
+
+### 1.2 Create the package.json
+
+Create `apps/api/package.json` with this content:
 
 ```jsonc
 // apps/api/package.json
+// ^ the full path. Create the file here.
 {
   "name": "@refrain/api",
   "private": true,
@@ -210,6 +255,59 @@ import { something } from "@refrain/ui"      // never
 // ✅ It shares types and schemas only.
 import { FormSchema } from "@refrain/fields" // fine
 ```
+
+### 1.3 Install the packages
+
+```bash
+cd apps/api
+pnpm install
+```
+
+**What you should see:** a list of added packages, ending with something like
+`Done in 20s`. pnpm prints the word "Progress" as it works — that is normal.
+
+> **pnpm may warn about blocked build scripts.** `argon2` is a package with native code, so
+> it needs to compile something on your machine. If you see a warning about
+> `Ignored build scripts: argon2`, that is pnpm 10 being careful. Fix it by adding argon2 to
+> `onlyBuiltDependencies` in the root `pnpm-workspace.yaml` and running `pnpm install` again.
+> **Do not ignore it** — you need argon2 working in Chapter 6.
+
+### 1.4 Create the tsconfig.json
+
+Create `apps/api/tsconfig.json`:
+
+```jsonc
+// apps/api/tsconfig.json
+{
+  "extends": "@refrain/tsconfig/app.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": ["src"]
+}
+```
+
+> **`"types": ["node"]` is required and it is the thing people forget.** Without it,
+> `process.env` and `console` are not typed, and you get errors that look like TypeScript is
+> broken. This is the server, so it needs Node's types, not the browser's.
+
+### 1.5 Check it worked
+
+```bash
+cd ~/projects/reprise/refrain        # back to the project root
+pnpm install
+```
+
+**What you should see:** `Scope: all 10 workspace projects` — it was 9, now 10. That number
+tells you pnpm noticed the new app.
+
+```bash
+pnpm --filter @refrain/api typecheck
+```
+
+**What you should see:** nothing, or an error saying `No inputs were found` — because
+`src/` is empty. That is **correct for now.** You have not written any code yet. It proves the
+package is wired up.
 
 **`@refrain/fields` is the only shared package the API may import.** That package has zero
 dependencies and no DOM. The moment the API can import UI code, it can start reading field
@@ -305,6 +403,95 @@ LOG_LEVEL=debug
 > origin scheme and a browser extension ID. If you forget it, the side panel cannot talk to the
 > API and the error is an opaque CORS failure with no useful message. This bites everyone once.
 
+### Let me explain the important lines
+
+**`z.object({...})`** — "here is the shape a valid setting must have." Zod checks the
+real environment against this shape.
+
+**`z.coerce.number()`** — settings from the environment are **always text**. Even `8787`
+arrives as the string `"8787"`. `coerce` turns text into a number for you. Without it,
+every number would need manual conversion.
+
+**`z.enum([...])`** — only these exact words are allowed. Typing `prod` instead of
+`production` is caught at boot instead of at 2am.
+
+**`.default("development")`** — if the setting is missing, use this instead. Notice this
+one is **optional**. The ones with no default, like `MONGODB_URI`, are **required**.
+
+**`safeParse` instead of `parse`** — `parse` throws on bad input. `safeParse` gives you
+back an object saying what went wrong, so you can print a helpful message. That is the
+whole difference between a 5-second fix and a 40-minute one.
+
+**`if (!parsed.success) { throw }`** — **this is the most important line in the file.** If a
+required setting is missing, the server refuses to start. Compare that with a server that
+starts, then crashes on the first request that happens to touch the missing setting —
+which might be three days later.
+
+> **Why validate at boot instead of when you use the value:** a startup crash is loud,
+> immediate, and names the exact missing variable. A runtime crash is quiet, happens at a
+> random moment, and says something unhelpful like `Cannot read property of undefined`.
+
+### Make it work right now
+
+Create `apps/api/.env` and fill in real values:
+
+```bash
+# Generate the two secrets. Do not make these up by hand.
+cd apps/api
+
+# JWT_SECRET — 48 random bytes, base64
+openssl rand -base64 48
+
+# For JWT_PUBLIC_KEY, Chapter 6 generates a real Ed25519 key pair.
+# For now a placeholder is fine — it must be at least 32 characters.
+```
+
+```bash
+# apps/api/.env  — DO NOT COMMIT THIS FILE. .gitignore already blocks it.
+NODE_ENV=development
+MONGODB_URI=mongodb://localhost:27017
+MONGODB_DB=refrain
+PORT=8787
+CORS_ORIGINS=http://localhost:5173
+JWT_SECRET=paste-the-openssl-output-here
+JWT_PUBLIC_KEY=placeholder-at-least-32-characters-long
+RATE_LIMIT_RPM=60
+LOG_LEVEL=debug
+```
+
+### Check it worked
+
+```bash
+# A tiny script to prove env.ts loads. Create src/env.test.ts:
+cd apps/api && cat > src/env.test.ts <<'EOF'
+import { describe, it, expect } from "vitest"
+import { env } from "./env"
+
+describe("env", () => {
+  it("loads without throwing", () => {
+    expect(env.PORT).toBe(8787)
+  })
+  it("turns CORS_ORIGINS into an array", () => {
+    expect(Array.isArray(env.CORS_ORIGINS)).toBe(true)
+  })
+})
+EOF
+pnpm test
+```
+
+**What you should see:**
+
+```
+✓ src/env.test.ts (2 tests)
+Test Files  1 passed (1)
+     Tests  2 passed (2)
+```
+
+> **Now prove the safety works. Temporarily rename `.env` to `.env.bak` and run
+> `pnpm test` again.** You should get a loud crash naming `MONGODB_URI` — not a silent
+> pass. Rename it back afterwards. **A validation you have never seen fail is a validation
+> you have not tested.**
+
 ---
 
 ## Step 3 — MongoDB locally
@@ -331,6 +518,55 @@ Or use Atlas for everything, including development:
 > database across two feature branches is how you end up with your test run writing fake users
 > into your dev data, and how CI wipes your local state. This is a five-character change that
 > prevents a class of outage.
+
+### If you do not have Docker
+
+You do not strictly need it. `brew install mongodb-community` works, or use Atlas free tier.
+But Docker is one command and it keeps your machine clean, so try Docker first.
+
+### Check it worked
+
+```bash
+# Is the container running?
+docker ps | grep refrain-mongo
+```
+
+**What you should see:** one line with `refrain-mongo`, an image name, and a status like
+`Up 10 seconds`. If you see nothing, it failed.
+
+```bash
+# Now the real test — can we actually talk to it?
+mongosh "mongodb://localhost:27017/refrain" --eval "db.runCommand({ ping: 1 })"
+```
+
+**What you should see:**
+
+```
+{ ok: 1 }
+```
+
+`{ ok: 1 }` means MongoDB answered. If you get a connection error, the container is not
+running — go back and read the error from `docker logs refrain-mongo`.
+
+> **This step is where most people get stuck, so here is the decision tree:**
+>
+> | What you see | What it means | What to do |
+> |---|---|---|
+> | `{ ok: 1 }` | Working | Move on |
+> | `ECONNREFUSED` | Nothing is listening on 27017 | Container not started. `docker ps -a` to see why |
+> | `mongosh: command not found` | You do not have the shell | Install MongoDB Desktop, or test with a Node script instead |
+> | `Docker Desktop is not running` | Docker itself is off | Start Docker Desktop and wait for the whale to settle |
+
+### Stopping and starting it later
+
+```bash
+docker stop refrain-mongo    # stop it, keep the data
+docker start refrain-mongo   # start it again
+docker rm -f refrain-mongo   # delete it AND its data. Careful.
+```
+
+**You only need `docker stop` when you are finished for the day.** Leaving it running costs
+almost nothing.
 
 ---
 
